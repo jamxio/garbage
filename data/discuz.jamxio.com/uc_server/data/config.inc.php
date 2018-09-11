@@ -1,7 +1,7 @@
 <?php 
 define('UC_DBHOST', 'localhost');
 define('UC_DBUSER', 'root');
-define('UC_DBPW', 'sqlgdyh1bg1');
+define('UC_DBPW', '');
 define('UC_DBNAME', 'discuz');
 define('UC_DBCHARSET', 'utf8');
 define('UC_DBTABLEPRE', 'pre_ucenter_');
