@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+	<application>
+	<name>phpwind8.7</name>
+	<alias>phpwind87</alias>
+	<version>1.0</version>
+	<pw-version>9.0</pw-version>
+	<charset>UTF-8</charset>
+	<type>style</type>
+	<style-type>site</style-type>
+	<description>phpwind8.7经典模板</description>
+	<logo>images/preview.jpg</logo>
+	<website>
+	</website>
+	<author-name>
+	</author-name>
+	<author-email>
+	</author-email>
+	<author-icon>
+	</author-icon>
+	</application>
+	</manifest>

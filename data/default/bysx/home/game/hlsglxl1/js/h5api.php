@@ -1,0 +1,1 @@
+document.write('<sc' + 'ript src="h5api.min.js?v=0.2"></scr' + 'ipt>');

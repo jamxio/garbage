@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <title>个人网站2.0</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="js/11.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/1.css">
+<script type="text/javascript"> 
+     
+</script>
+<style type="text/css">
+    .tanchu{
+	border:1px solid gray;
+	width:300px;
+	height:auto;
+	margin-left:20%;
+	margin-top:50px;
+	display:none;
+	background:white;
+	text-align:center;
+	}
+</style>
+</head>
+<body>
+    <div id="erweima">
+        <p>扫一扫加微信</p>
+        <img src="images/ma1.jpg" alt="二维码"/>
+    </div>
+    <div id='container'>
+        <div id='header'>
+            <img src="images/jam.gif" alt="logo" title="wangjiangxiao"/>
+            <p>现在时间是：<span id='time'></span></p>
+        </div>
+        <div id='menu'>
+            <ul>
+                <li onclick="location.href='index.html'">主页</li>
+                <li onclick="location.href='introduce.html'">个人介绍</li>
+                <li onclick="location.href='message.html'">留言</li>
+                <li onclick="location.href='notice.html'">公告</li>
+                <li onclick="location.href='photo.html'">相册展示</li>
+                <li onclick="location.href='game.html'">游戏体验</li>
+                <li class="chosed" onclick="location.href='user.html'">用户中心</li>
+            </ul>
+        </div>
+        <script type="text/javascript">
+            var shubiao=document.getElementsByTagName("ul")[0];
+            var len=shubiao.children.length;
+            for(var i=0;i<len;i++){
+                shubiao.children[i].onmouseover=jingguo;
+                shubiao.children[i].onmouseout=likai;
+            }
+        </script>
+        <div id="main">
+		<br/>
+            <h4>当前状态：<span id="user">未登录</span></h4>
+            <div class="tanchu" id="login" style="display:block;"><!-- 登录模块前台页面，tanchu类样式默认为隐藏 --><br/>
+                <h3>登录</h3><br/>
+                <p>
+                用户名：<input type="text" id="l_username" required  autofocus/>
+                </p><br/>
+                <p>
+                密 码：<input type="password" id="l_password" required/>
+                </p><br/>
+                <P><input type="button" value="登录" onclick="login();"/>&nbsp;&nbsp;
+                <input type="button" value="注册" onclick="document.getElementById('register').style.display='block';this.parentNode.parentNode.style.display='none';"/></p><br/>
+            </div>
+            <div class="tanchu" id="register"><!-- 注册模块前台页面，tanchu类样式默认为隐藏 -->
+            <br/>
+                 <h3>注册</h3><br/>
+                 <p>
+                 用户名：<input type="text" id="r_username" required placeholder="登录账号"/>
+                 </p><br/>
+                 <p>
+                 密 码：<input type="password" id="r_password" required placeholder="登录密码"/>
+                 </p><br/>
+				 <p>
+                 确认密码：<input type="password" id="r_cur_pwd" required placeholder="确认密码"/>
+                 </p><br/>
+                 <p>
+                 网名：<input type="text" id="r_name" placeholder="长度限制5"/>
+                 </p><br/>
+                 <p>
+                 性别：<input type="text" id="r_sex" placeholder="默认男"/>
+                 </p><br/>
+                 <p>
+                 年龄：<input type="text" id="r_age" placeholder="默认20"/>
+                 </p><br/>
+                 <P><input type="button" value="提交注册" onclick="reg();"/>&nbsp;&nbsp;
+                 <input type="button" value="取消" onclick="this.parentNode.parentNode.style.display='none';document.getElementById('login').style.display='block';"/></p><br/>
+				 网名不填写时存为“本站用户”；
+            </div>
+			<div class="tanchu" id="info"><!-- 资料模块前台页面，tanchu类样式默认为隐藏 -->
+            <br/>
+                 <h3>资料</h3><br/> 
+                 <p>
+                 网名：<span id="i_name"></span>
+                 </p><br/>
+                 <p>
+                 性别：<span id="i_sex"></span>
+                 </p><br/>
+                 <p>
+                 年龄：<span id="i_age"></span>
+                 </p><br/>
+				 <p>
+                 用户类型：<span id="i_gonggao"></span>
+                 </p><br/>
+            </div><br/><br/>
+            <!-- JiaThis Button BEGIN -->
+            <div class="jiathis_style" style="clear:both;">
+                <span class="jiathis_txt">分享到：</span>
+                <a class="jiathis_button_tools_1"></a>
+                <a class="jiathis_button_tools_2"></a>
+                <a class="jiathis_button_tools_3"></a>
+                <a class="jiathis_button_tools_4"></a>
+                <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+                <a class="jiathis_counter_style"></a>
+            </div>
+            <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+            <!-- JiaThis Button END -->
+        </div>
+            <br /><br />
+        <div id="footer">
+            <span>技术支持：</span>
+            <ul>
+                <li><a href="http://www.gdut.edu.cn/" target="_blank">广东工业大学</a></li>
+                <li><a href="http://www.yanshiba.com/" target="_blank">燕十八</a></li>
+                <li><a href="http://www.itcast.cn/" target="_blank">传智播客</a></li>
+				<li><a href="http://www.gzacwl.com/" target="_blank">鳌创网络</a></li>
+                <li><a href="http://www.jamxio.icoc.cc" target="_blank">版主王五</a></li>
+            </ul>
+            
+        </div>
+        <div>
+            <ul style="list-style:none; color: gray; font-size: 14px;">
+                <li>
+                    <div align="center">Copyright &#169;&#160;2016&#8212;2025,江晓个人网站,Jamxio's Personal Website All Rights Reserved. </div>
+                </li>
+                <li>
+                    <div align="center">版权归原作者及网站所有 地址：中国&#183;广东&#183;广州 </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+            
+</body>
+<script type="text/javascript" src="./js/jquery-1.12.3.min.js"></script>
+<script type="text/javascript" src="./js/layer/layer.js"></script>
+<script language="javascript">
+    
+	$(document).ready(function(){
+		$.ajax({
+			type: "get",
+			url: '../api/user.php?action=info&ajax=1',
+			dataType:'html',
+			success: function(data){
+				if(data!="" && parseInt(data)!=0){
+					var zhuangtai ='在线  <a href="javascript:;" onclick="logout();" style="display:inline;">退出登录</a>';
+					$('#user').html(zhuangtai);
+					$('.tanchu').css('display','none');
+					$('#info').html(data);
+					$('#info').css('display','block');
+					$('#info').css('margin-left','10%');
+				}else{
+					return false;
+				}
+			},
+			error:function(){
+				layer.alert('获取数据失败');
+			}
+		});
+	});
+
+	function logout(){
+		$.ajax({
+			type: "get",
+			url: '../api/user.php?action=logout&ajax=1',
+			dataType:'html',
+			success: function(data){
+				if(data!=""){
+					layer.alert(data);
+					location.href="user.html";
+				}else{
+					return false;
+				}
+			},
+			error:function(){
+				layer.alert('获取数据失败');
+			}
+		});
+	}
+
+	function reg(){
+		var username = $.trim($('#r_username').val());
+		var password = $.trim($('#r_password').val());
+		if(username == '' || password == ''){			
+			layer.alert('用户名和密码不能为空');
+			return false;
+		}
+		var curpwd = $.trim($('#r_cur_pwd').val());
+		if(password != curpwd){
+			layer.alert('两次密码不一致');
+			return false;
+		}
+		var name = $.trim($('#r_name').val());
+		var sex = $.trim($('#r_sex').val());
+		var age = $.trim($('#r_age').val());
+		$.ajax({
+			type: "post",
+			url: '../api/user.php?action=reg&ajax=1',
+			data: {"username":username,
+				"password":password,
+				"name":name,
+				"sex":sex,
+				"age":age,
+			},
+			dataType:'html',			
+			success: function(data){				
+				if(data!=""){
+					var flag = parseInt(data);
+					if(flag ==1){
+						layer.alert('注册成功，请登录！');
+						location.href="user.html";
+						return;
+					}
+					layer.alert(data);					
+					return false;
+				}else{
+					layer.alert('no data');
+					return;
+				}
+			},
+			error:function(){
+				layer.alert('获取数据失败');
+			}
+		});		
+	}
+
+	function login(){
+		var username = $.trim($('#l_username').val());
+		var password = $.trim($('#l_password').val());
+		if(username == '' || password == ''){			
+			layer.alert('用户名和密码不能为空');
+			return false;
+		}
+		$.ajax({
+			type: "post",
+			url: '../admin/login.php?action=login&ajax=1',
+			//'../api/user.php?action=login&ajax=1',
+			data: {"username":username,
+				"password":password,
+			},
+			dataType:'html',			
+			success: function(data){				
+				if(data!=""){
+					var flag = parseInt(data);
+					if(flag ==1){
+						layer.alert('登录成功！');
+						location.href="user.html";
+						return;
+					}
+					layer.alert(data);					
+					return false;
+				}else{
+					alert('no data');
+					return;
+				}
+			},
+			error:function(){
+				layer.alert('获取数据失败');
+			}
+		});		
+	}
+</script>
+
+</html>

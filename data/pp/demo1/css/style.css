@@ -1,0 +1,181 @@
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+}
+
+body {
+    position: relative;
+    margin-left: 250px;
+    padding: 60px 0 0;
+    z-index: 1;
+    transition: margin ease 500ms;
+}
+
+
+/*侧边导航栏*/
+
+.sidebar-nav {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 250px;
+    color: white;
+}
+
+.sidebar-nav .pull-left {
+    width: 42px;
+    height: 100%;
+    background-color: #2a2a2a;
+}
+
+.sidebar-nav .right {
+    margin-left: 42px;
+    height: 100%;
+    background-color: black;
+}
+.sidebar-nav .nav-stacked>li+li {
+    margin-top: 0;
+}
+
+.sidebar-nav .nav-pills>li>a {
+    border-radius: 0;
+    color: white;
+    border-left: 5px transparent solid;
+}
+
+.sidebar-nav .nav-pills>li>a:hover {
+    background-color: #737373;
+    border-color: #737373;
+}
+
+.sidebar-nav .nav-pills>li.active>a,
+.sidebar-nav .nav-pills>li.active>a:hover,
+.sidebar-nav .nav-pills>li.active>a:focus {
+    color: #fff;
+    background-color: #2E3B4F;
+    border-color: #4D6384;
+}
+
+.sidebar-nav .logo {
+    margin: 0;
+    padding: 0 15px;
+    line-height: 42px;
+}
+.sidebar-nav .logo a{
+	color: white;
+	text-decoration: none;
+}
+
+.sidebar-nav .icon {
+    height: 42px;
+}
+
+.sidebar-nav .menu {
+    height: 42px;
+}
+
+.sidebar-nav .navbar-toggle {
+    display: block;
+    margin: 0;
+    border: 0;
+    background-color: black;
+    height: 42px;
+    border-radius: 0;
+}
+
+.sidebar-nav .navbar-toggle .icon-bar {
+    background-color: white;
+}
+
+.sidebar-nav .panel-group .panel {
+    border: 0;
+    border-radius: 0;
+    background-color: inherit;
+}
+
+.sidebar-nav .panel-body {
+	display: table;
+	width: 100%;
+    padding: 0;
+    border: 0 !important;
+}
+
+.sidebar-nav .panel-heading {
+    border-radius: 0;
+    border: 0;
+    background-color: inherit;
+    color: inherit;
+    border-left: 5px black solid;
+    cursor: pointer;
+}
+
+.sidebar-nav .panel-heading:hover {
+    background-color: #737373;
+    border-color: #737373;
+}
+.sidebar-nav .panel-heading .close{
+	color: white;
+	opacity: 0.7;
+	transform: rotate(0);
+	transition: transform 500ms ease;
+}
+.sidebar-nav .panel-heading:hover .close{
+	color: #000;
+	opacity: 0.5;
+}
+.sidebar-nav .panel-heading.collapsed .close{
+	transform: rotate(-90deg);
+}
+
+/*图表相关*/
+.echarts-toolbar{
+    position: absolute;
+    top: 60px;
+    left: 0;
+    height: 30px;
+    z-index: 1;
+
+}
+
+.echarts-toolbar>.btn-group,.echarts-toolbar>.btn{
+    height: 30px;
+}
+.echarts-toolbar .btn-group>.btn{
+    padding: 4px 12px;
+}
+.echarts-toolbar .btn{
+    border-radius: 0;
+}
+
+.echarts-toolbar .open > #echart-tab{
+    min-width: 0px;
+    width: 140px;
+    padding: 5px 10px;
+}
+.echarts-toolbar .tooltip-inner{
+    white-space: nowrap;
+}
+
+/*顶部导航栏*/
+.topbar-nav{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 32px;
+}
+.topbar-nav #trash{
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border-radius: 0;
+}
+.topbar-nav .topbar-container{
+    height: 32px;
+    margin-right: 32px;
+}
+.topbar-nav .topbar-container .btn{
+    height: 32px;
+}

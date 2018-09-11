@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<title>冰山滑雪冒险-鳌创网络小游戏</title>
+<meta name="keywords" content="冰山滑雪冒险TML5小游戏,鳌创网络"/>
+<meta name="description" content="冰山滑雪冒险HTML5小游戏,HTML5小游戏,鳌创网络"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="鳌创网络" content="true" />
+<meta name="mobile-web-app-capable" content="yes" />
+<style type="text/css">
+* { padding:0; margin:0;}
+html, body { background:#000; color:#fff; overflow:hidden; touch-action:none; -ms-touch-action:none; }
+canvas { touch-action-delay:none; touch-action:none; -ms-touch-action:none; }
+</style>
+</head> 
+ 
+<body> 
+<div id="fb-root"></div>	
+<script>
+(function(){	if (window.location.protocol.substr(0, 4) === "file"){	alert("不要在本地打开。");	}	})();
+</script>
+<div id="c2canvasdiv">
+	<canvas id="c2canvas" width="480" height="854">
+		<h1>您的浏览器似乎不支持HTML5。试试将你的浏览器升级到最新版本。<a href="http://www.whatbrowser.org">什么是浏览器？</a>
+		<br/><br/><a href="http://www.microsoft.com/windows/internet-explorer/default.aspx">IE浏览器</a><br/>
+		<a href="http://www.mozilla.com/firefox/">火狐</a><br/>
+		<a href="http://www.google.com/chrome/">谷歌</a><br/>
+		<a href="http://www.apple.com/safari/download/">苹果</a><br/>
+		<a href="http://www.google.com/chromeframe">包含IE内核的谷歌浏览器</a><br/></h1>
+	</canvas>
+</div>
+<script src="js/jquery-2.1.1.min.js"></script>
+<script src="../../js/layer/layer.js"></script>
+<script src="../../js/gzacwl.js"></script>
+<script src="js/c2runtime.js"></script>
+
+<script>
+	jQuery(window).resize(function() {	cr_sizeCanvas(jQuery(window).width(), jQuery(window).height());		});
+	jQuery(document).ready(function (){				cr_createRuntime("c2canvas");	});
+	function onVisibilityChanged() {
+		if (document.hidden || document.mozHidden || document.webkitHidden || document.msHidden)
+			cr_setSuspended(true);
+		else
+			cr_setSuspended(false);
+	};
+	
+	document.addEventListener("visibilitychange", onVisibilityChanged, false);
+	document.addEventListener("mozvisibilitychange", onVisibilityChanged, false);
+	document.addEventListener("webkitvisibilitychange", onVisibilityChanged, false);
+	document.addEventListener("msvisibilitychange", onVisibilityChanged, false);
+</script>
+<div style="display:none;"><script src="https://s95.cnzz.com/z_stat.php?id=1259929120&web_id=1259929120" language="JavaScript"></script></div>
+</body> 
+</html> 

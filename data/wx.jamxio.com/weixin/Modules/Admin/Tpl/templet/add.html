@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>添加产品信息模板</title>
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="format-detection" content="telephone=no">
+
+		<link rel="stylesheet" href="__PUBLIC__/Radmin/plugins/layui/css/layui.css" media="all" />
+		<link rel="stylesheet" href="__PUBLIC__/Radmin/css/global.css">
+		<link rel="stylesheet" href="__PUBLIC__/Radmin/plugins/font-awesome/css/font-awesome.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/Radmin/css/templet.css">
+		<script type="text/javascript" src='__PUBLIC__/js/jquery.js'></script>
+		<script type="text/javascript" src="__PUBLIC__/Radmin/js/editor/plugins/code/prettify.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/Radmin/js/editor/kindeditor.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/Radmin/js/editor/lang/zh_CN.js"></script>
+        <link rel="stylesheet" type="text/css" href="__PUBLIC__/Radmin/js/editor/themes/default/default.css" />
+        <link rel="stylesheet" type="text/css" href="__PUBLIC__/Radmin/js/editor/plugins/code/prettify.css" />
+        <script type="text/javascript">
+          var editor;
+          KindEditor.ready(function(K) {
+	      editor = K.create('textarea[pname="fm_content"]', {
+          //		items : ['source','|','wordpaste','table','quickformat', '|','link',   'image', 'insertfile',   '|','code', 'preview', 'fullscreen'],
+		  cssPath : '__PUBLIC__/Radmin/js/editor/plugins/code/prettify.css',
+		  uploadJson : '__PUBLIC__/Radmin/js/editor/php/upload_json.php',
+		  fileManagerJson : '__PUBLIC__/Radmin/js/editor/php/file_manager_json.php',
+		  allowFileManager : true,
+		  width:'670px',
+		  height:'300px'
+	     });
+         });
+       </script>
+	</head>
+
+	<body>
+		<div style="margin: 15px;">
+		<blockquote class="layui-elem-quote">
+	      <h1>*添加产品信息模板</h1>
+	    </blockquote>
+			<form class="layui-form" method="post" action="__URL__/insert" enctype="multipart/form-data">
+				<!-- <div class="layui-form-item">
+					<label class="layui-form-label">产品图片：</label>
+					<div class="layui-input-inline">
+              			<input type="file" name="image"  id="file0" />
+              			<img style="width:50px;height:50px;"  src="" id="img0" >
+               			<input type="hidden" value="" name="old_image" />
+					</div>
+				</div> -->
+				<div class="layui-form-item">
+					<label class="layui-form-label">产品图片：</label>
+					<div class="layui-input-inline">
+						<div class="site-demo-upload">
+						  <img id="img0" style="width:80px;height:80px;border-radius:0">
+						  <div class="site-demo-upbar">
+						  	<div class="layui-box layui-upload-button">
+	              			  <input type="file" name="image"  id="file0" class="layui-upload-file"/>
+	               			  <input type="hidden" value="" name="old_image" />
+	               			  <span class="layui-upload-icon"><i class="layui-icon" style="font-weight:bold;"></i>上传图片</span>
+	               			</div>
+						  </div>
+						</div>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">产品名称：</label>
+					<div class="layui-input-inline">
+						<input type="text" name="name" lay-verify="text" placeholder="请输入产品名称" autocomplete="off" class="layui-input">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">零售价格：</label>
+					<div class="layui-input-inline">
+						<input type="number" name="price" step="0.01" lay-verify="number" placeholder="请输入零售价格" autocomplete="off" class="layui-input">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">是否上架：</label>
+					<div class="layui-input-inline">
+						<select name="dis">
+						    <option value="" selected="">请选择</option>
+							<option value="1"  >上架</option>
+							<option value="0">下架</option>
+						</select>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">所属分类：</label>
+					<div class="layui-input-inline">
+						<select name="type">
+						    	<option value="" selected="">未分类</option>
+						    	<volist name="sortlist" value="vo">
+								<option value="{$vo.id}" <?php if($row['typeid'] == $vo['id']){echo 'selected';} ?>>{$vo.name}</option>
+							</volist>
+						</select>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">产品库存：</label>
+					<div class="layui-input-inline">
+						<input type="number" name="num" step="1" lay-verify="int" placeholder="请输入当前库存" autocomplete="off" class="layui-input">
+					</div>
+				</div>
+				<fieldset class="layui-elem-field layui-field-title">
+				      <legend>添加产品属性&nbsp;&nbsp;&nbsp;&nbsp;<span class="layui-btn layui-btn-small" id="add-property">添加</span></legend>
+				   <div class="layui-field-box" style="padding-left:25px;" id="addpro">
+					  <h1 style="display:inline-block;">*产品属性的名称：产品属性的值(多个值用&&符号隔开)&nbsp;&nbsp;&nbsp;&nbsp;例：颜色：蓝色&&绿色&&黄色</h1>
+				  </div>
+			   </fieldset>
+			   <fieldset class="layui-elem-field layui-field-title">
+				   <legend>设置代理拿货价（元）</legend>
+ 
+				  <div class="layui-field-box" style="width:70%">
+                  <egt name="level_num" value="1">
+			      <div class="layui-form-item">
+					<label class="layui-form-label">代理拿货价:</label>
+					<div class="layui-input-inline">
+						<input type="number" name="price1" step="0.01" placeholder="请输入价格" autocomplete="off" class="layui-input">
+						
+				    </div>
+				  </div>
+                  </egt>
+			<div class="layui-form-item">
+				<label class="layui-form-label">返利部分:</label>
+				<div class="layui-input-inline">
+					<input type="number" name="rebate" step="0.1" placeholder="请输入返利部分" autocomplete="off" class="layui-input">
+			    </div>
+			</div>
+                  <!-- 
+                  <egt name="level_num" value="2">
+				  <div class="layui-form-item">
+					<label class="layui-form-label">{$level_name.2}：</label>
+					<div class="layui-input-inline">
+						<input type="number" name="price2" step="0.01" placeholder="请输入价格" autocomplete="off" class="layui-input">
+				    </div>
+				  </div>
+				  </egt>
+                  <egt name="level_num" value="3">
+				  <div class="layui-form-item">
+					<label class="layui-form-label">{$level_name.3}：</label>
+					<div class="layui-input-inline">
+						<input type="number" name="price3" step="0.01" placeholder="请输入价格" autocomplete="off" class="layui-input">
+				    </div>
+				  </div>
+				  </egt>
+                  <egt name="level_num" value="4">
+				  <div class="layui-form-item">
+					<label class="layui-form-label">{$level_name.4}：</label>
+					<div class="layui-input-inline">
+						<input type="number" name="price4" step="0.01" placeholder="请输入价格" autocomplete="off" class="layui-input">
+				    </div>
+				  </div>
+				  </egt>
+                  <egt name="level_num" value="5">
+				  <div class="layui-form-item">
+					<label class="layui-form-label">{$level_name.5}：</label>
+					<div class="layui-input-inline">
+						<input type="number" name="price5" step="0.01" placeholder="请输入价格" autocomplete="off" class="layui-input">
+				    </div>
+				  </div>
+				  </egt>
+                  <egt name="level_num" value="6">
+				  <div class="layui-form-item">
+					<label class="layui-form-label">{$level_name.6}：</label>
+					<div class="layui-input-inline">
+						<input type="number" name="price6" step="0.01" placeholder="请输入价格" autocomplete="off" class="layui-input">
+				    </div>
+				  </div>
+				  </egt> -->
+				  </div>
+			   </fieldset>
+
+			   <fieldset class="layui-elem-field layui-field-title">
+				<legend>产品介绍</legend>
+				<div class="layui-field-box">
+					  <div class="layui-form-item">
+						<label class="layui-form-label">产品描述：</label>
+						<div class="layui-input-inline">
+							<input type="text" name="state" lay-verify="description" placeholder="产品描述" autocomplete="off" class="layui-input">
+					    </div>
+				     </div>
+				</div>
+				<div class="layui-field-box">
+					  <div class="layui-form-item">
+						<label class="layui-form-label">产品简介:</label>
+						<div class="layui-input-block">
+							<textarea class="layui-textarea" pname="fm_content"  name="disc" style="display: none"></textarea>
+					    </div>
+				     </div>
+				</div>
+			   </fieldset>
+				<div class="layui-form-item">
+					<div class="layui-input-block">
+						<button class="layui-btn" lay-submit="submit" lay-filter="demo1">立即提交</button>
+						<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+					</div>
+				</div>
+			</form>
+		</div>
+		<script type="text/javascript" src="__PUBLIC__/Radmin/plugins/layui/layui.js"></script>
+		<script>
+			layui.use(['form', 'layedit', 'laydate','upload','jquery'], function() {
+				var form = layui.form(),
+					layer = layui.layer,
+					layedit = layui.layedit,
+					laydate = layui.laydate;
+				//自定义验证规则
+				form.verify({
+					title: function(value) {
+						if(value.length < 5) {
+							return '标题至少得5个字符啊';
+						}
+					},
+					pass: [/(.+){6,12}$/, '密码必须6到12位'],
+					content: function(value) {
+						layedit.sync(editIndex);
+					}
+				});
+
+            });
+			// 添加属性
+			  $('#add-property').click(function(){
+			  	var text = '';
+                text += '<div class="property">';
+				text += '<div class="layui-input-inline">'
+				text += '<input type="text" name="attrname[]" id="attrname" lay-verify="name" placeholder="产品属性的名称" autocomplete="off" class="layui-input">'
+				text += '</div> '
+				text += '<div class="layui-input-inline">'
+				text += '<input type="text" name="attrvalue[]" id="attrvalue" lay-verify="property" placeholder="产品属性的值" autocomplete="off" class="layui-input">'
+				text += '</div>'
+				text += ' <span class="layui-btn del" onClick="del(this)">删除</span>'
+				text += '</div>';
+				$('#addpro').append(text);
+			  });
+			  function del(e){ 
+			  	$(e).closest(".property").remove();
+			  }
+
+		</script>
+       <script type="text/javascript">
+          (function($){
+	         $("#file0").change(function(){
+		         var objUrl = getObjectURL(this.files[0]) ;
+		         console.log("objUrl = "+objUrl) ;
+		     if (objUrl) {
+			    $("#img0").attr("src", objUrl) ;
+		      }
+	       }) ;
+       })(jQuery);
+        //建立一個可存取到該file的url
+       function getObjectURL(file) {
+	       var url = null ; 
+	      if (window.createObjectURL!=undefined) { // basic
+		       url = window.createObjectURL(file) ;
+	       } else if (window.URL!=undefined) { // mozilla(firefox)
+		       url = window.URL.createObjectURL(file) ;
+	       } else if (window.webkitURL!=undefined) { // webkit or chrome
+		      url = window.webkitURL.createObjectURL(file) ;
+	       }
+	         return url ;
+        }
+     </script>
+
+</body>
+</html>

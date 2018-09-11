@@ -1,0 +1,23 @@
+
+<body style="background: black;" for='panel'>
+	<span id='panel' contenteditable onfocus="this.style.outline='0';" style="background: black;color:white;">>>></span>
+</body>
+<script>
+	var nowColor = 0;
+	bring = function(){
+		if(nowColor++%2>0){
+			document.getElementById('panel').style.borderRight = 'white solid 1px';
+		}else{
+			document.getElementById('panel').style.borderRight = 'black solid 1px';
+		}
+	}
+	var bringing = false;
+	/*document.onlad = document.onclick =function(){
+		if(!bringing)
+			bringing = setInterval(bring,500);
+	}
+	document.onblur = function(){
+		if(bringing)
+			clearInteval(bringing);
+	}*/
+</script>

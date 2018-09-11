@@ -1,0 +1,96 @@
+﻿<!doctype html>
+<html lang="zh_CN">
+<head>
+    <meta charset="UTF-8">
+    <title>疯狂盖楼</title>
+    <meta name="keywords" content="疯狂盖楼,疯狂盖楼html5游戏"/>
+    <meta name="description" content="疯狂盖楼html5游戏"/>
+    <meta name="viewport" content="width=320, initial-scale=1, maximum-scale=1">
+    <meta name="game-id" content="building"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="full-screen" content="yes"/>
+    <meta name="screen-orientation" content="portrait"/>
+    <meta name="x5-fullscreen" content="true"/>
+    <meta name="360-fullscreen" content="true"/>
+    <script src="../../js/jquery-1.12.3.min.js"></script>
+    <script src="../../js/layer/layer.js"></script>
+    <script src="../../js/gzacwl.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #131313;
+        }
+
+        #cproIframe1Wrap {
+            position: absolute !important;
+            top: 0 !important;
+            bottom: auto !important;
+        }
+
+        .img {
+            width: 0;
+            height: 0;
+            overflow: hidden;
+            position: fixed;
+        }
+    </style>
+</head>
+<body>
+<img src="picture/share_img_1.png" class="img"/>
+<canvas id="gameCanvas" width="320" height="480"></canvas>
+
+<script type="text/javascript">
+    var _hmt = _hmt || [];
+</script>
+<script src="js/game.min.js"></script>
+<script>
+    (function (f, o) {
+        'callShare more statScore getRank showAd'.replace(/\S+/g, function (a) {
+            o[a] = f
+        });
+        var a = o._sd = {};
+        o.updateData = function (b) {
+            for (var i in b)if (b.hasOwnProperty(i))a[i] = b[i]
+        }
+    })(function () {
+    }, LBShare = {});
+
+    window.shareData = {
+        title: document.title,
+        imgUrl: "res/share.png",
+        desc: document.title
+    };
+    LBShare.updateData(shareData);
+    window.onload = function () {
+        cc.game.onStart = function () {
+            cc.view.adjustViewPort(true);
+            cc.sys.isMobile ? cc.view.setDesignResolutionSize(320, 480, cc.ResolutionPolicy.FIXED_WIDTH) :
+                    cc.view.setDesignResolutionSize(320, 480, cc.ResolutionPolicy.SHOW_ALL);
+            cc.winSize = cc.director.getWinSize();
+            cc.view.resizeWithBrowserSize(true);
+            cc.LoaderScene.preload(g_resources, function () {
+                cc.director.runScene(new GameScene());
+            }, this);
+        };
+        cc.game.run('gameCanvas');
+    };
+    function goHome() {
+        LBShare.more();
+    }
+    function clickMore() {
+        LBShare.more();
+    }
+    function dp_share() {
+    }
+    function dp_Ranking() {
+        LBShare.more();
+    }
+    function showAd() {
+    }
+    function hideAd() {
+    }
+</script>
+<div style="display:none;"><script src="https://s95.cnzz.com/z_stat.php?id=1259929120&web_id=1259929120" language="JavaScript"></script></div>
+</body>
+</html>

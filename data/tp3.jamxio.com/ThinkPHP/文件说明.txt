@@ -1,0 +1,19 @@
+├─ThinkPHP 框架系统目录（可以部署在非web目录下面） 
+│  ├─Common       核心公共函数目录 
+│  ├─Conf         核心配置目录 
+│  ├─Lang         核心语言包目录 
+│  ├─Library      框架类库目录 
+│  │  ├─Think     核心Think类库包目录 
+│  │  ├─Behavior  行为类库目录 
+│  │  ├─Org       Org类库包目录 
+│  │  ├─Vendor    第三方类库目录 
+│  │  ├─ ...      更多类库目录 
+│  ├─Mode         框架应用模式目录 
+│  ├─Tpl          系统模板目录 
+│  ├─LICENSE.txt  框架授权协议文件 
+│  ├─logo.png     框架LOGO文件 
+│  ├─README.txt   框架README文件 
+│  └─ThinkPHP.php 框架入口文件
+
+
+上述应用的目录结构只是默认设置，事实上，在实际部署应用的时候，我们建议除了应用入口文件和 Public 资源目录外，其他文件都放到非WEB目录下面，具有更好的安全性。

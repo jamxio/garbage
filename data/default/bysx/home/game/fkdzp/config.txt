@@ -1,0 +1,8 @@
+{"c2dictionary":true, "data":{
+	"facebookPage":"game",
+	"twitterPage":"game",
+	"googlePage":"http://mp.weixin.qq.com/s?__biz=MzAxODk3MDExMw==&mid=2247483656&idx=1&sn=4a817003cfd6bf47dcac0ac9d586e271#rd",
+	"rateUs":"game",
+	"moreGames":"http://game.gzacwl.com",
+	"shareMessage":"我刚刚在彩色转盘中拿下了 $score 分 !"
+}}

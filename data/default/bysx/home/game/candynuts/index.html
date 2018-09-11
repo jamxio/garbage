@@ -1,0 +1,54 @@
+﻿<!doctype html>
+<html>
+<head> <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, maximum-scale=1, minimum-scale=1, initial-scale=1, user-scalable=no" />
+<style>
+body {
+padding:0px;
+margin:0px;
+}
+#gameArea {
+position: fixed;
+display: table;
+}
+#imgl2p {
+display: none;
+text-align: center;
+vertical-align: middle;
+width: 100%;
+height: 100%;
+}
+#imgl2p img{
+width: 100%;
+}
+canvas, #bg, #background{
+display: block;
+position:absolute;
+width: 100%;
+height: 100%;
+}
+</style>
+<title>糖豆坚果</title>
+<meta name="keywords" content="糖豆坚果,糖豆坚果html5游戏" />
+<meta name="description" content="糖豆坚果html5游戏" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+    <script src="../../js/jquery-1.12.3.min.js"></script>
+    <script src="../../js/layer/layer.js"></script>
+    <script src="../../js/gzacwl.js"></script>
+<script type="text/javascript" src="js/game.js"></script>
+<script type="text/javascript" src="js/preloadjsmin.js"></script>
+<script type="text/javascript" src="js/easeljsmin.js"></script>
+<script type="text/javascript" src="js/tweenjsmin.js"></script>
+<script type="text/javascript" src="js/soundjsmin.js"></script>
+<script type="text/javascript" src="js/preloader.js"></script>
+<script type="text/javascript" src="js/bg.js"></script>
+</head>
+<body onLoad="start()">
+<div id="gameArea">
+<div id="imgl2p"><img src="picture/l2p.png"></div>
+<div id="background" style="-moz-user-select: none; -khtml-user-select: none; -webkit-user-select: none; user-select: none;"></div>
+<canvas id="gameField" oncontextmenu="return false;"></canvas>
+</div>
+<div style="display:none;"><script src="https://s95.cnzz.com/z_stat.php?id=1259929120&web_id=1259929120" language="JavaScript"></script></div>
+</body>
+</html>

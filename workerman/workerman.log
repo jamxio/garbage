@@ -1,0 +1,6 @@
+2017-10-24 23:23:37 pid:12543 Workerman[http_test.php] start in DAEMON mode
+2017-10-24 23:24:54 pid:12569 Workerman[http_test.php] stop 
+2017-10-24 23:24:54 pid:12569 Workerman[http_test.php] is stoping ...
+2017-10-24 23:24:54 pid:12546 Workerman[http_test.php] stopping ...
+2017-10-24 23:24:54 pid:12546 Workerman[http_test.php] has been stopped
+2017-10-24 23:24:54 pid:12569 Workerman[http_test.php] stop success

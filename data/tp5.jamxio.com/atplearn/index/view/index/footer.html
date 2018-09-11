@@ -1,0 +1,14 @@
+<?php	
+/**I()函数改为了input()
+	应该是由于弃用单字辅助函数的意思；
+**/
+	$page_f = input('page');
+	$page_p = $page_f>1?($page_f-1):'';
+	$page_n = 1+intval($page_f);
+?>
+<div align="center" style="padding-top:30px;margin-bottom:400px;">
+<!-- {U('index',array('page'=>$page_p))} U()已在TP5被替换成url()-->
+<a href="{:url('index'.$page_p)}?page={$page_p}" style="float:left;">《上一页</a>
+<a href="{:url('index')}">《首页》</a>
+<a href="{:url('index'.$page_n)}?page={$page_n}" style="float:right;">下一页》</a>
+</div>

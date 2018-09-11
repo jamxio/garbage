@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>追逐星辰-鳌创小游戏</title>
+<meta name="keywords" content="追逐星辰HTML5小游戏,鳌创网络"/>
+<meta name="description" content="追逐星辰HTML5小游戏,HTML5小游戏,鳌创网络"/>
+<meta name="viewport"  content="width=device-width,initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="full-screen" content="yes"/>
+<meta name="screen-orientation" content="portrait"/>
+<meta name="x5-fullscreen" content="true"/>
+<meta name="360-fullscreen" content="true"/>
+<style>
+	body, canvas, div {
+		-moz-user-select: none;
+		-webkit-user-select: none;
+		-ms-user-select: none;
+		-khtml-user-select: none;
+		-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+	}
+	#toolbar {
+	  position: fixed;
+	  bottom: 1%;
+	  text-align: center;
+	  z-index: 99;
+	  margin: auto;
+	  width: 80%;
+	  left: 10%;
+	  z-index: 999;
+	  display: none;}
+	#toolbar .btn{
+		width: 40%;
+		color: rgb(249, 244, 244);
+		background-color:rgb(62, 140, 231);
+		margin: auto;
+		text-align: center;
+		border-radius: 5px;
+		font-weight: bold;
+		border: none;
+		font-size: 18x;
+		margin: 1%;
+		position: relative;
+		max-width:240px;
+	}
+    </style>
+<link rel="stylesheet" type="text/css" href="css/index.css">
+<script src="js/gzacwl.js"></script>
+</head>
+<body style="padding:0; margin: 0; background: #000;">
+<div id="toolbar" ><img class="btn" ontouchstart="clickMore();" src="picture/more.png"/>	</div>
+<script src="../../js/jquery-1.12.3.min.js"></script>
+<script src="../../js/layer/layer.js"></script>
+<script src="../../js/gzacwl.js"></script>
+<script src="js/loading.js"></script>
+<canvas id="gameCanvas" width="800" height="450"></canvas>
+<script  src="js/game.min.js"></script>
+<script language=javascript>
+         var gzacwl = new Gzacwl("tldq");
+        gzacwl.shareData.title = "能否逃离地球看你本事!";
+        gzacwl.shareData.content = "道路危险重重且行且珍惜!";
+		function goHome(){
+			window.location=gzacwl.homeurl;
+		}
+		function clickMore(){
+			 window.location=gzacwl.moreurl;
+		}
+		function dp_share(){
+			gzacwl.share();
+		}
+		function dp_Ranking(){
+			window.location=gzacwl.homeurl;
+		}
+
+		function showAd(){
+		}
+		function hideAd(){
+		}
+		function dp_submitScore(score){
+			if(score>0){
+				gzacwl.score =parseInt(score);
+				gzacwl.scoreName = "得了"+score+"分";
+				gzacwl.shareData.title ="我在逃离地球中得了"+score+"分,能否逃离地球看你本事！";
+				gzacwl.utils.shareConfirm("你在逃离地球中得了"+score+"分!通知一下小伙伴吧!",dp_share);
+			}
+		}
+	</script>
+	<div style="display:none;"><script src="https://s95.cnzz.com/z_stat.php?id=1259929120&web_id=1259929120" language="JavaScript"></script></div>
+	
+</body>
+</html>

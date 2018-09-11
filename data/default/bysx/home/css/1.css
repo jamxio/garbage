@@ -1,0 +1,68 @@
+*{ margin:0;
+}
+div{margin:auto;}
+a  {text-decoration:none;
+   }
+a:hover{
+    text-decoration:underline;
+    
+    }
+#erweima{width:120px;
+         height:150px;
+         position:fixed;
+         background-color:gray;
+         margin-top:100px;
+         margin-left:0;
+         }
+/*  #container{width:1000px;
+           margin:auto;}  */
+#header {width:1000px;
+        height:121px;
+        background:purple url(../images/mh.png);
+        }
+#header p,#header img{ float:left;}
+#header p{  padding-left:100px;
+            padding-top:95px;
+            }
+#menu{  width:1000px;
+        height:50px;
+        margin-top:2px;
+        background:gray url(../images/menu1.png);
+        }
+#menu ul{list-style:none;
+            width:1000px;
+            padding-left:25px;
+         margin:0 auto;
+         }
+#menu ul li{
+        float:left;
+        width:125px;
+        height:40px;
+        color:white;
+        text-align:center;
+        line-height:40px;
+        margin:10px 5px 0 ;
+        }
+.chosed{
+		background:white url(../images/chose.png);
+		color:green;
+		}
+ .shan{display:none;
+        width:200px;
+        position:relative;
+        background:purple url(../images/mh.png);
+        }
+a{display:block;} 
+#main{  width:1000px;
+		background:url(../images/1.jpg);
+        }
+#footer{width:1000px;
+        height:100px;
+        background:#333 url(../images/chose.png);
+        }
+#footer li,#footer span{
+        float:left;
+        list-style:none;
+        padding-top:30px;
+        margin-right:10px;
+        }

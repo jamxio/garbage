@@ -1,0 +1,100 @@
+<title>架构总览-tp5</title>
+<div class="article-body"><p></p>
+    <div id="s1125190324"><p><code>ThinkPHP5.0</code>应用基于<code>MVC</code>（模型-视图-控制器）的方式来组织。</p>
+        <blockquote class="info"><p>
+            MVC是一个设计模式，它强制性的使应用程序的输入、处理和输出分开。使用MVC应用程序被分成三个核心部件：模型（M）、视图（V）、控制器（C），它们各自处理自己的任务。</p></blockquote>
+        <p>5.0的URL访问受路由决定（CodeIgniter和laravel框架访问基本或全部需要配置路由来访问），如果关闭路由或者没有匹配路由的情况下，则是基于：</p>
+        <blockquote class="info"><p><code>http://serverName/index.php（或者其它应用入口文件）/模块/控制器/操作/参数/值…</code></p>
+        </blockquote>
+        <p>下面的一些概念有必要做下了解，可能在后面的内容中经常会被提及。</p>
+        <h2 data-line="11" class="line"><a id="_11"></a>入口文件</h2>
+        <p>用户请求的PHP文件，负责处理一个请求（注意，不一定是URL请求）的生命周期，最常见的入口文件就是<code>index.php</code>，有时候也会为了某些特殊的需求而增加新的入口文件，例如给后台模块单独设置的一个入口文件<code>admin.php</code>（应该可以BIND_MODULE吧）或者一个控制器程序入口<code>think</code>都属于入口文件。
+        </p>
+        <h2 data-line="14" class="line"><a id="_14"></a>应用</h2>
+        <p>应用在<code>ThinkPHP</code>中是一个管理系统架构及生命周期的对象，由系统的 <code>\think\App</code>类完成，应用通常在入口文件中被调用和执行，具有相同的应用目录（<code>APP_PATH</code>）的应用我们认为是同一个应用，但一个应用可能存在多个入口文件。
+        </p>
+        <p>应用具有自己独立的配置文件、公共（函数）文件。</p>
+        <h2 data-line="19" class="line"><a id="_19"></a>模块</h2>
+        <p>一个典型的应用是由多个模块组成的，这些模块通常都是应用目录下面的一个子目录，每个模块都有自己独立的配置文件、公共文件和类库文件。</p>
+        <blockquote class="danger"><p>5.0支持单一模块架构设计，如果你的应用下面只有一个模块，那么这个模块的子目录可以省略，并且在应用配置文件中修改：</p></blockquote>
+        <blockquote class="default"><pre><code><span class="hljs-string">'app_multi_module'</span> =&gt;	<span
+                class="hljs-keyword">false</span>,
+</code></pre>
+        </blockquote>
+        <h2 data-line="28" class="line"><a id="_28"></a>控制器</h2>
+        <p>每个模块拥有独立的<code>MVC</code>类库及配置文件，一个模块下面有多个控制器负责响应请求，而每个控制器其实就是一个独立的控制器类。</p>
+        <p>控制器主要负责请求的接收，并调用相关的模型处理，并最终通过视图输出。{$data}</p>
+        <blockquote class="danger">
+            <p>事实上，5.0中控制器是可以被跳过的，通过路由我们可以直接把请求调度到某个模型或者其他的类进行处理。(其实不明白这样的目的，曾经吹嘘的mvc，这样就跳过C？效仿其他框架--laravel等，去粗取精？)</p>
+        </blockquote>
+        <p>5.0的控制器类比较灵活，可以无需继承任何基础类库。</p>
+        <p>一个典型的<code>Index</code>控制器类如下：</p>
+        <pre><code><span class="hljs-keyword">namespace</span> <span class="hljs-title">app</span>\<span
+                class="hljs-title">index</span>\<span class="hljs-title">controller</span>;
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Index</span> 
+</span>{
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span
+                    class="hljs-keyword">function</span> <span class="hljs-title">index</span><span class="hljs-params">()</span>
+    </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-string">'hello,thinkphp!'</span>;
+    }
+}
+</code></pre>
+        <h2 data-line="51" class="line"><a id="_51"></a>操作</h2>
+        <p>一个控制器包含多个操作（方法），操作方法是一个URL访问的最小单元。</p>
+        <p>下面是一个典型的<code>Index</code>控制器的操作方法定义，包含了两个操作方法：</p>
+        <pre><code><span class="hljs-keyword">namespace</span> <span class="hljs-title">app</span>\<span
+                class="hljs-title">index</span>\<span class="hljs-title">controller</span>;
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Index</span> 
+</span>{
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span
+                    class="hljs-keyword">function</span> <span class="hljs-title">index</span><span class="hljs-params">()</span>
+    </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-string">'index'</span>;
+    }
+    
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span
+                    class="hljs-keyword">function</span> <span class="hljs-title">hello</span><span class="hljs-params">($name)</span>
+    </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-string">'Hello,'</span>.$name;
+    }
+}
+</code></pre>
+        <p>
+            操作方法可以不使用任何参数，如果定义了一个<code>非可选参数</code>--没默认值，则该参数必须通过用户请求传入，如果是URL请求，则通常是<code>$_GET</code>或者<code>$_POST</code>方式传入。
+        </p>
+
+
+        <h2 data-line="74" class="line"><a id="_74"></a>模型</h2>
+        <p>模型类通常完成实际的业务逻辑和数据封装，并返回和格式无关的数据。</p>
+        <blockquote class="danger"><p>模型类并不一定要访问数据库，而且在5.0的架构设计中，只有进行实际的数据库查询操作的时候，才会进行数据库的连接，是真正的惰性连接。<br>
+            ThinkPHP的模型层支持多层设计，你可以对模型层进行更细化的设计和分工，例如把模型层分为逻辑层/服务层/事件层等等。</p></blockquote>
+
+        <h2 data-line="80" class="line"><a id="_80"></a>视图</h2>
+        <p>控制器调用模型类后返回的数据通过视图组装成不同格式的输出。视图根据不同的需求，来决定调用模板引擎进行内容解析后输出还是直接输出。</p>
+        <p>视图通常会有一系列的模板文件对应不同的控制器和操作方法，并且支持动态设置模板目录。</p>
+
+
+        <h2 data-line="85" class="line"><a id="_85"></a>驱动</h2>
+        <p>系统很多的组件都采用驱动式设计，从而可以更灵活的扩展，驱动类的位置默认是放入核心类库目录下面，也可以重新定义驱动类库的命名空间而改变驱动的文件位置。</p>
+        <h2 data-line="88" class="line"><a id="_88"></a>行为</h2>
+        <p>行为（Behavior）是在预先定义好的一个应用位置执行的一些操作。类似于<code>AOP</code>编程中的“切面”的概念，给某一个切面绑定相关行为就成了一种类<code>AOP</code>编程的思想。所以，行为通常是和某个位置相关，行为的执行时间依赖于绑定到了哪个位置上。
+        </p>
+        <p>要执行行为，首先要在应用程序中进行行为侦听，例如：</p>
+        <pre><code><span class="hljs-comment">// 在app_init位置侦听行为</span>
+\think\Hook::<span class="hljs-built_in">listen</span>(<span class="hljs-string">'app_init'</span>);
+</code></pre>
+        <p>然后对某个位置进行行为绑定：</p>
+        <pre><code>// 绑定行为到app_init位置
+<span class="hljs-symbol">\t</span>hink<span class="hljs-symbol">\H</span>ook::add('app_init','<span
+                    class="hljs-symbol">\a</span>pp<span class="hljs-symbol">\i</span>ndex<span
+                    class="hljs-symbol">\b</span>ehavior<span class="hljs-symbol">\T</span>est');
+</code></pre>
+        <p>一个位置上如果绑定了多个行为的，按照绑定的顺序依次执行，除非遇到中断。</p>
+        <h2 data-line="105" class="line"><a id="_105"></a>命名空间</h2>
+        <p><code>ThinkPHP5</code>采用了<code>PHP</code>的命名空间进行类库文件的设计和规划，并且符合<code>PSR-4</code>的自动加载规范。</p>
+    </div>
+</div>
+{include file="index/footer"/}

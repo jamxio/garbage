@@ -1,0 +1,50 @@
+<style type="text/css">
+body{
+    text-align: center;
+}
+</style>
+<meta charset="UTF-8" />
+
+<video src="video.php" controls="controls" width="60%" ><!-- oncontextmenu="return false;" -->
+
+您的浏览器不支持 video 标签。
+
+</video>
+
+
+<!--Right Click Menu-->
+<div class="right-menu" id="right-menu" style="display:none;position:fixed;z-index:100;">  
+    <ul>  
+        <b>选择类型：</b>  
+    </ul>  
+    <div align="center">  
+        <a href='javascript:;' value="01">拼接视频文件</a>  
+        <a href='javascript:;' value="02">拼接图片文件</a>  
+        <a href='javascript:;' value="03">拼接字幕文件</a>  
+        <a href='javascript:;' value="04">流媒体文件</a>  
+        <a href='javascript:;' value="05">图片文件</a>  
+        <a href='javascript:;' value="06">字幕文件</a>  
+        <a href='javascript:;' value="07">动画文件</a>  
+        <a href='javascript:;' value="08">字体文件</a>  
+        <a href='javascript:;' value="09">音视频文件</a>  
+    </div>  
+</div>
+<script type="text/javascript">
+window.onload = function(){  
+    /*var forRight = document.getElementById("right-menu");  
+    document.getElementsByTagName("video")[0].oncontextmenu = function(event){  
+        var event = event || window.event;  
+        //显示菜单  
+        forRight.style.display = "block";  
+        //菜单定位  
+        forRight.style.left = event.pageX+"px";  
+        forRight.style.top = event.pageY+"px";  
+        //return false为了屏蔽默认事件  
+        return false;  
+    };  
+    //再次点击，菜单消失  
+    document.onclick=function(){  
+        forRight.style.display = "none";  
+    };*/  
+};
+</script>

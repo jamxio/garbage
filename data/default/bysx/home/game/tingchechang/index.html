@@ -1,0 +1,44 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>来停车HTML5小游戏-鳌创网络</title>
+<meta name="keywords" content="来停车HTML5小游戏,鳌创网络"/>
+<meta name="description" content="来停车HTML5小游戏,HTML5小游戏,鳌创网络"/>
+<meta name="viewport" content="width=device-width,initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no,target-densitydpi=device-dpi"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="full-screen" content="true"/>
+<meta name="screen-orientation" content="portrait"/>
+<meta name="x5-fullscreen" content="true"/>
+<meta name="360-fullscreen" content="true"/>
+<style>
+body { text-align:center; background:#056194; padding:0; border:0; margin:0; height:100%;}
+html { -ms-touch-action:none;  overflow:hidden;}
+div, canvas { display:block; position:absolute; margin:0 auto; padding:0; border:0;}
+</style>
+<link rel='canonical' href='http://www.gzacwl.com/'/>
+</head>
+<body>
+<div style="position:relative;" id="gameDiv"></div>
+<script>var document_class = "Game";</script>
+<script src="js/egret_require.js"></script>
+<script src="js/egret_loader.js"></script>
+<script src="../../js/jquery-1.12.3.min.js"></script>
+<script src="../../js/layer/layer.js"></script>
+<script src="../../js/gzacwl.js"></script>
+<script src="js/game-min.js"></script>
+<script>
+function OnGameStage(){
+	App.gamename = "来停车";
+	App.nameid = "来停车";
+}
+var support = [].map && document.createElement("canvas").getContext;
+if (support) {
+	egret_h5.startGame();
+}else{
+	alert("请更换浏览器玩。")
+}
+</script>
+<div style="display:none;"><script src="https://s95.cnzz.com/z_stat.php?id=1259929120&web_id=1259929120" language="JavaScript"></script></div>
+</body>
+</html>

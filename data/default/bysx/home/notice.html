@@ -1,0 +1,172 @@
+<!doctype html public "-//w3c//dtd xhtml 1.0 strict//en"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>个人网站2.0</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="js/11.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/1.css">
+<script type="text/javascript"> 
+     
+</script>
+<style type="text/css">
+
+</style>
+</head>
+<body>
+    <div id="erweima">
+        <p>扫一扫加微信</p>
+        <img src="images/ma1.jpg" alt="二维码"/>
+    </div>
+    <div id='container'>
+        <div id='header'>
+            <img src="images/jam.gif" alt="logo" title="wangjiangxiao"/>
+            <p>现在时间是：<span id='time'></span></p>
+        </div>
+        <div id='menu'>
+            <ul>
+                <li onclick="location.href='index.html'">主页</li>
+                <li onclick="location.href='introduce.html'">个人介绍</li>
+                <li onclick="location.href='message.html'">留言</li>
+                <li class="chosed" onclick="location.href='notice.html'">公告</li>
+                <li onclick="location.href='photo.html'">相册展示</li>
+                <li onclick="location.href='game.html'">游戏体验</li>
+                <li onclick="location.href='user.html'">用户中心</li>
+            </ul>
+        </div>
+        <script type="text/javascript">
+            var shubiao=document.getElementsByTagName("ul")[0];
+            var len=shubiao.children.length;
+            for(var i=0;i<len;i++){
+                shubiao.children[i].onmouseover=jingguo;
+                shubiao.children[i].onmouseout=likai;
+            }
+        </script>
+        <div id="main">
+		<br/>
+            <h4>当前用户：<span id="user">未登录,请登录后再发表</span></h4>			
+            <br />
+            
+			<div id="messlist"></div>
+            <!-- JiaThis Button BEGIN -->
+            <div class="jiathis_style" style="clear:both;">
+                <span class="jiathis_txt">分享到：</span>
+                <a class="jiathis_button_tools_1"></a>
+                <a class="jiathis_button_tools_2"></a>
+                <a class="jiathis_button_tools_3"></a>
+                <a class="jiathis_button_tools_4"></a>
+                <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+                <a class="jiathis_counter_style"></a>
+            </div>
+            <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+            <!-- JiaThis Button END -->
+        </div>
+            <br /><br />
+        <div id="footer">
+            <span>技术支持：</span>
+            <ul>
+                <li><a href="http://www.gdut.edu.cn/" target="_blank">广东工业大学</a></li>
+                <li><a href="http://www.yanshiba.com/" target="_blank">燕十八</a></li>
+                <li><a href="http://www.itcast.cn/" target="_blank">传智播客</a></li>
+				<li><a href="http://www.gzacwl.com/" target="_blank">鳌创网络</a></li>
+                <li><a href="http://www.jamxio.icoc.cc" target="_blank">版主王五</a></li>
+            </ul>
+       </div>
+        <div>
+            <ul style="list-style:none; color: gray; font-size: 14px;">
+                <li>
+                    <div align="center">Copyright &#169;&#160;2016&#8212;2025,江晓个人网站,Jamxio's Personal Website All Rights Reserved. </div>
+                </li>
+                <li>
+                    <div align="center">版权归原作者及网站所有 地址：中国&#183;广东&#183;广州 </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+            
+</body>
+<script type="text/javascript" src="./js/jquery-1.12.3.min.js"></script>
+<script type="text/javascript" src="./js/layer/layer.js"></script>
+<script language="javascript">
+    
+	$(document).ready(function(){
+		info();
+		$.ajax({
+			type: "get",
+			url: '../api/notice.php?action=check&ajax=1',
+			dataType:'html',
+			success: function(data){
+				if(data!="" && parseInt(data)!=0){
+					$('#user').html(data);
+					$('#add').attr('onclick','addmes();');
+				}else{
+					return false;
+				}
+			},
+			error:function(){
+				layer.alert('获取数据失败');
+			}
+		});
+	});
+
+	function info(){
+		$.ajax({
+			type: "get",
+			url: '../api/notice.php?action=info&ajax=1',
+			dataType:'html',
+			success: function(data){
+				if(data!="" && parseInt(data)!=0){
+					$('#messlist').html(data);
+				}else{
+					return false;
+				}
+			},
+			error:function(){
+				layer.alert('获取数据失败');
+			}
+		});
+	}
+
+	function addmes(){
+		var content = $('#content').val();
+		$.ajax({
+			type: "post",
+			url: '../api/notice.php?action=add&ajax=1',
+			data:{"content":content},
+			dataType:'html',
+			success: function(data){
+				if(data!=""){
+					layer.alert(data);
+					info();
+				}else{
+					return false;
+				}
+			},
+			error:function(){
+				layer.alert('获取数据失败');
+			}
+		});
+	}
+
+    function del(id){
+		$.ajax({
+			type: "post",
+			url: '../api/notice.php?action=del&ajax=1',
+			data:{"messid":id},
+			dataType:'html',
+			success: function(data){
+				if(data!=""){
+					layer.alert(data);
+					info();
+				}else{
+					return false;
+				}
+			},
+			error:function(){
+				layer.alert('获取数据失败');
+			}
+		});
+	}
+</script>
+
+</html>

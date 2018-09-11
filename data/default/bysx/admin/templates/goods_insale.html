@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="zh" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="zh" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!--> <html lang="zh" class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8" />
+    <title>个人网站管理后台</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta name="keywords" content="个人网站管理后台">
+    <meta content="个人网站管理后台" name="description" />
+    <meta content="jamxio" name="author" />
+    <!--{include file="comm/style_tmp.html"}-->
+    <link rel="stylesheet" href="./templates/media/css/DT_bootstrap.css" />
+   
+
+</head>
+<body class="page-header-fixed">
+<!-- BEGIN HEADER -->
+<!--{include file="comm/header.html"}-->
+<!-- END HEADER -->
+<!-- BEGIN CONTAINER -->
+<div class="page-container">
+    <!-- BEGIN SIDEBAR LEFT -->
+    <!--{include file="comm/left.html"}-->
+    <!-- END SIDEBAR LEFT -->
+    <!-- BEGIN PAGE -->
+    <div class="page-content">
+        <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+        <div id="portlet-config" class="modal hide">
+            <div class="modal-header">
+                <button data-dismiss="modal" class="close" type="button"></button>
+                <h3>窗口小部件设置</h3>
+            </div>
+            <div class="modal-body">窗口小部件设置形式放在这里</div>
+        </div>
+        <!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+        <!-- BEGIN PAGE CONTAINER-->
+        <div class="container-fluid">
+            <!-- BEGIN PAGE HEADER-->
+            <!--{include file="comm/setting.html"}-->
+            <!-- END PAGE HEADER-->
+            <div id="dashboard">
+                <div class="portlet box blue">
+					<!--{if $method eq "list"}-->
+                    <div class="portlet-title">
+                        <div class="caption"><i class="icon-reorder"></i><!--{if $status eq 1}-->线上产品<!--{else $status eq 2}-->产品仓库<!--{/if}--></div>
+                        <div class="tools"><a href="javascript:;" class="collapse"></a></div>
+                        <div class="actions"><a class="btn green"  href="goods_insale.php?action=add"><i class="icon-plus"></i>添加产品</a></div>
+                    </div>
+                    <div class="portlet-body">
+                        <div class="row-fluid">
+                            <div class="span7">
+                                <form name="myform" method="Post" action="goods_insale.php<!--{if $status eq 2}-->?status=2<!--{/if}-->">
+                                    <div id="sample_1_filter" class="dataTables_filter">
+                                        <label id="sre">
+											产品名关键字：
+                                                <input name="goods_key" type="text" id="goods_key" size="10" value="<!--{$goods_key}-->" autofocus/>
+                                            &nbsp;&nbsp;
+                                            产品类别：
+                                            <select name="goods_type" id="goods_type">
+												<option>所有</option>
+											<!--{section name=a loop=$goods_type_list}-->
+                                                <option value="<!--{$goods_type_list[a].g_type}-->" <!--{if $goods_type eq $goods_type_list[a].g_type}-->selected="selected"<!--{/if}--> ><!--{$goods_type_list[a].g_type}--></option>
+											<!--{/section}-->
+                                            </select>
+                                            &nbsp;&nbsp;
+                                            <input name="action" type="hidden" id="action" value="search" />
+                                            <input class="btn green" type="submit" value="搜索">
+                                        </label>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <table class="table table-striped table-hover table-bordered" id="sample_editable_1">
+                            <thead>
+                            <tr>
+                                <th>产品名称</th>
+                                <th>产品类别</th>
+                                <th>产品价格（元）</th>
+                                <th>产品介绍</th>
+                                <th>发布时间</th>
+                                <th>操作&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <!--{section name=a loop=$goods_list}-->
+                            <tr class="">
+                                <td><!--{$goods_list[a].g_name}--></td>
+                                <td><!--{$goods_list[a].g_type}--></td>
+								<td style="color:red;"><!--{$goods_list[a].g_price}--></td>
+                                <td><!--{$goods_list[a].g_introduce}--></td>
+                                <td><!--{$goods_list[a].g_time}--></td>
+                                <td><a class="修改" href="goods_insale.php?action=add&id=<!--{$goods_list[a].g_id}-->">修改</a>&nbsp;&nbsp;|
+									<a class="上下架" href="goods_insale.php?action=backorup&id=<!--{$goods_list[a].g_id}-->"><!--{if $status eq 1}-->下架<!--{elseif $status eq 2}-->上架<!--{/if}--></a>&nbsp;&nbsp;|
+									<a class="删除" href="goods_insale.php?action=del&id=<!--{$goods_list[a].g_id}-->">断售删除</a>&nbsp;&nbsp;
+								</td>
+                            </tr>
+                            <!--{/section}-->
+                            </tbody>
+                        </table>
+
+                        <div class="row-fluid">
+                            <div class="span6">
+                                <div id="sample_1_info" class="dataTables_info">每页 <font color="#FF0000"><!--{$pageinfo.pagesize}--></font> 条 共 <font color="#FF0000"><!--{$pageinfo.totalpage}--></font> 页 共 <font color="#FF0000"><!--{$pageinfo.totalrecord}--></font> 条记录</div>
+                            </div>
+                            <div class="span6"><div class="dataTables_paginate paging_bootstrap pagination"><ul><!--{$pageinfo.multi}--></ul></div></div>
+                        </div>
+                    </div>
+					<!--{/if}-->
+					<!--{if $method eq "edit"}-->
+                    <div class="portlet-title">
+                        <div class="caption"><i class="icon-reorder"></i>发布产品</div>
+                        <div class="tools"><a href="javascript:;" class="collapse"></a></div>
+                        <div class="actions"><a class="btn green"  href="goods_insale.php?action=add"><i class="icon-plus"></i>添加产品</a></div>
+                    </div>
+                    <div class="portlet-body form">
+                        <form action="goods_insale.php?action=add_save" method="post" name="frm" id="frm" onSubmit="return checkad_edit(this);" class="form-horizontal form-bordered form-row-stripped">
+                            <div class="row-fluid">
+								<input type="hidden" name="goods_id" value="<!--{$goods_info.g_id}-->"/> 
+								<div class="control-group">
+                                    <label class="control-label">产品名称</label>
+                                    <div class="controls">
+                                        <input type="text" placeholder="(必须填写且字数15以下)" name="goods_name" id="goods_name" value="<!--{$goods_info.g_name}-->" class="m-wrap span3" />
+                                        <span class="help-inline error">*</span>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">产品类别</label>
+                                    <div class="controls">
+                                        <select name="goods_type" id="goods_type">
+												<option value="0">自定义</option>
+											<!--{section name=a loop=$goods_type_list}-->
+                                                <option value="<!--{$goods_type_list[a].g_type}-->" <!--{if $goods_info.g_type eq $goods_type_list[a].g_type}-->selected="selected"<!--{/if}--> ><!--{$goods_type_list[a].g_type}--></option>
+											<!--{/section}-->
+                                            </select>
+											<input type="text" placeholder="(自定义类型，不填默认为其他)" name="goods_type_mix" id="goods_type_mix" value="<!--{$news_info.n_title}-->" class="m-wrap span2" />
+                                        <span class="help-inline error">*</span>
+                                    </div>
+                                </div>
+								<div class="control-group">
+                                    <label class="control-label">产品价格（元）</label>
+                                    <div class="controls">
+                                        <input type="text" placeholder="(必须填写产品单价)" name="goods_price" id="goods_price" value="<!--{$goods_info.g_price}-->" class="m-wrap span2" />
+                                        <span class="help-inline error">*</span>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">产品概述</label>
+                                    <div class="controls">
+                                        <input type="text" placeholder="(可以暂不填写，字数30以内)" name="goods_introduce" id="goods_inctroduce" value="<!--{$goods_info.g_introduce}-->" class="m-wrap span6" />
+                                        <span class="help-inline error"></span>
+                                    </div>
+                                </div>
+                            </div>
+							<input type="hidden" name="goods_time" value=""/> 
+							<div class="control-group">
+                                    <label class="control-label">产品动向</label>
+                                    <div class="controls">
+                                        <label class="radio">
+                                            <input type="radio" name="goods_status" value="1" checked />
+                                            发布线上
+                                        </label>
+                                        <label class="radio">
+                                            <input type="radio" name="goods_status" value="2" <!--{if $goods_info.g_status eq 2}-->checked<!--{/if}--> />
+                                            放入仓库
+                                        </label>
+                                    </div>
+                                </div>
+                            <div class="form-actions">
+                                <input type="hidden" name="goods_id" id="goods_id" value="<!--{$goods_info.g_id}-->">
+                                <button type="submit" class="btn blue">保存</button>
+                                <button type="reset" class="btn">重填</button>
+                            </div>
+                        </form>
+                    </div>
+                    <!--{/if}-->
+                </div>
+            </div>
+            <!-- END PAGE CONTAINER-->
+        </div>
+    </div>
+    <!-- END PAGE -->
+</div>
+<!-- END CONTAINER -->
+<!-- BEGIN FOOTER -->
+<!--{include file="comm/footer.html"}-->
+<!-- END FOOTER -->
+<!--{include file="comm/javascript_tmp.html"}-->
+
+
+</body>
+</html>

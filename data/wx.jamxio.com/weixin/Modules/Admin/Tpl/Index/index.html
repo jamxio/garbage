@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" class="app">
+<head>
+  <meta charset="utf-8" />
+  <title>轻情趣管理后台</title>
+  <meta name="description" content="app, web app, responsive, admin dashboard, admin, flat, flat ui, ui kit, off screen nav" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" /> 
+  
+     <include file="common:css"/>
+  <!--[if lt IE 9]>
+    <script src="js/ie/html5shiv.js"></script>
+    <script src="js/ie/respond.min.js"></script>
+    <script src="js/ie/excanvas.js"></script>
+  <![endif]-->
+  
+</head>
+<body>
+  <section class="vbox">
+
+     <include file="common:header"/>
+
+    <section>
+      <section class="hbox stretch">
+
+       <include file="common:left"/>
+
+        <section id="content">
+          <section class="vbox">          
+            <section class="scrollable padder">
+             
+              <ul class="breadcrumb no-border no-radius b-b b-light pull-in">
+                <li><a href="#"><i class="fa fa-home"></i>仪表盘</a></li>
+              </ul>
+              <div class="m-b-md">
+                <h3 class="m-b-none">仪表盘</h3>
+                <small>欢迎使用 轻情趣后台系统</small>
+              </div>
+              <section class="panel panel-default">
+                <div class="row m-l-none m-r-none bg-light lter">
+                  <div class="col-sm-6 col-md-3 padder-v b-r b-light">
+                    <span class="fa-stack fa-2x pull-left m-r-sm">
+                      <i class="fa fa-circle fa-stack-2x text-info"></i>
+                      <i class="fa fa-male fa-stack-1x text-white"></i>
+                    </span>
+                    <a class="clear" href="#">
+                      <span class="h3 block m-t-xs"><strong>12</strong></span>
+                      <small class="text-muted text-uc">注册人数</small>
+                    </a>
+                  </div>
+                  <div class="col-sm-6 col-md-3 padder-v b-r b-light lt">
+                    <span class="fa-stack fa-2x pull-left m-r-sm">
+                      <i class="fa fa-circle fa-stack-2x text-warning"></i>
+                      <i class="fa fa-bug fa-stack-1x text-white"></i>
+                      <!-- <span class="easypiechart pos-abt easyPieChart" data-percent="1917" data-line-width="4" data-track-color="#fff" data-scale-color="false" data-size="1917" data-line-cap="butt" data-animate="2000" data-target="#bugs" data-update="3000" style="width: 50px; height: 50px; line-height: 50px;"><canvas width="50" height="50"></canvas></span> -->
+                    </span>
+                    <a class="clear" href="/index.php?s=/Admin/Order/index.html">
+                      <span class="h3 block m-t-xs"><strong id="bugs">1917</strong></span>
+                      <small class="text-muted text-uc">完成订单数</small>
+                    </a>
+                  </div>
+                  <div class="col-sm-6 col-md-3 padder-v b-r b-light">                     
+                    <span class="fa-stack fa-2x pull-left m-r-sm">
+                      <i class="fa fa-circle fa-stack-2x text-danger"></i>
+                      <i class="fa fa-fire-extinguisher fa-stack-1x text-white"></i>
+                      <span class="easypiechart pos-abt easyPieChart" data-percent="1" data-line-width="4" data-track-color="#f5f5f5" data-scale-color="false" data-size="1" data-line-cap="butt" data-animate="3000" data-target="#firers" data-update="5000" style="width: 50px; height: 50px; line-height: 50px;"><canvas width="50" height="50"></canvas></span>
+                    </span>
+                    <a class="clear" href="#">
+                      <span class="h3 block m-t-xs"><strong id="firers">0</strong></span>
+                      <small class="text-muted text-uc">商品数</small>
+                    </a>
+                  </div>
+                  <div class="col-sm-6 col-md-3 padder-v b-r b-light lt">
+                    <span class="fa-stack fa-2x pull-left m-r-sm">
+                      <i class="fa fa-circle fa-stack-2x icon-muted"></i>
+                      <i class="fa fa-clock-o fa-stack-1x text-white"></i>
+                    </span>
+                    <a class="clear" href="#">
+                      <span class="h3 block m-t-xs"><strong>2017-06-01</strong></span>
+                      <small class="text-muted text-uc">当前时间</small>
+                    </a>
+                  </div>
+                </div>
+              </section>
+
+            </section>
+          </section>
+          <a href="#" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen" data-target="#nav"></a>
+        </section>
+        <aside class="bg-light lter b-l aside-md hide" id="notes">
+          <div class="wrapper">Notification</div>
+        </aside>
+      </section>
+    </section>
+  </section>
+
+       <include file="common:js"/>  
+       
+</body>
+</html>

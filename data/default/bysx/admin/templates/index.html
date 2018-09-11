@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="zh" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="zh" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!--> <html lang="zh" class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8" />
+    <title>个人网站管理后台</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta name="keywords" content="个人网站管理后台">
+    <meta content="个人网站管理后台" name="description" />
+    <meta content="jamxio" name="author" />
+    <!--{include file="comm/style_tmp.html"}-->
+    <link rel="stylesheet" href="./templates/media/css/DT_bootstrap.css" />
+   
+
+</head>
+<body class="page-header-fixed">
+<!-- BEGIN HEADER -->
+<!--{include file="comm/header.html"}-->
+<!-- END HEADER -->
+<!-- BEGIN CONTAINER -->
+<div class="page-container">
+    <!-- BEGIN SIDEBAR LEFT -->
+    <!--{include file="comm/left.html"}-->
+    <!-- END SIDEBAR LEFT -->
+    <!-- BEGIN PAGE -->
+    <div class="page-content">
+        <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+        <div id="portlet-config" class="modal hide">
+            <div class="modal-header">
+                <button data-dismiss="modal" class="close" type="button"></button>
+                <h3>窗口小部件设置</h3>
+            </div>
+            <div class="modal-body">窗口小部件设置形式放在这里</div>
+        </div>
+        <!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+        <!-- BEGIN PAGE CONTAINER-->
+        <div class="container-fluid">
+            <!-- BEGIN PAGE HEADER-->
+            <!--{include file="comm/setting.html"}-->
+            <!-- END PAGE HEADER-->
+            <div id="dashboard">
+                <div class="portlet box blue">
+				<div class="portlet-body form">
+				    <form action="index.php" method="post" name="frm" id="frm" onSubmit="return checkad_edit(this);" class="form-horizontal form-bordered form-row-stripped">
+					<div class="control-group">
+						
+						<div>
+							
+							<script id="container" type="text/plain"><!--{$index_content}--></script>
+							<script type="text/javascript" src="ueditor1433/ueditor.config.js"></script>
+							<script type="text/javascript" src="ueditor1433/ueditor.all.js"></script>
+							<script type="text/javascript">var ue = UE.getEditor('container');</script>
+						</div>
+					</div>
+
+					<div class="form-actions">
+						<button type="submit" class="btn blue">保存</button>
+						<input type="reset" class="btn" value="若未确定修改勿点保存按钮"/>
+					</div>
+					</form>
+				</div>
+
+
+					
+                </div>
+            </div>
+            <!-- END PAGE CONTAINER-->
+        </div>
+    </div>
+    <!-- END PAGE -->
+</div>
+<!-- END CONTAINER -->
+<!-- BEGIN FOOTER -->
+<!--{include file="comm/footer.html"}-->
+<!-- END FOOTER -->
+<!--{include file="comm/javascript_tmp.html"}-->
+
+
+</body>
+</html>

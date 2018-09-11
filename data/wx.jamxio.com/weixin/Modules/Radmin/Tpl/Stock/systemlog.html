@@ -1,0 +1,209 @@
+<include file="Public:public"/>
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>系统出库记录</title>
+<link href="__PUBLIC__/Admin/css/jquery-ui.css" type="text/css" rel="stylesheet" />
+<link href="__PUBLIC__/css/index.css" rel="stylesheet">
+<script type="text/javascript" src="__PUBLIC__/Admin/js/agentcode.js"></script>
+
+<script type="text/javascript" src='__PUBLIC__/Js/jquery.js'></script>
+    <script type="text/javascript" src='__PUBLIC__/Js/index.js'></script>
+    <script type="text/javascript" src="__PUBLIC__/Js/WdatePicker.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Admin/js/jquery-ui.js" ></script>
+    <script type="text/javascript">
+    function sc($name,$ulr){
+        //利用对话框返回的值 （true 或者 false）
+        if(confirm("你确定要删除"+$name+"吗？")){
+            window.location.href=$ulr;
+        }else{
+            return false;
+        }
+    }
+    </script>
+    
+</head>
+<body class="zh_CN">
+     <div class="col_main">
+      <div class="main_hd">
+          <div class="title_tab" id="topTab">
+              <ul class="tab_navs mt title_tab">
+                <li class="tab_nav js_top  selected" data-id="send"><a href="#">系统出库记录</a></li>
+                <if condition="$statusbm eq 'm'">
+                	<li style="height:35px;float:right;margin-right:18px;">
+                      <form method="get" action="__APP__/Radmin/Search/systemSearch">
+                          <input type="hidden" name="type" value="systemtag"/>
+                          <input type="hidden" name="typea" value="{$statusbm}"/>
+                          <input style="height:35px;" type="text" id="keyword3" name="keyword3" required placeholder="小标签"/>
+                          <input type="submit" value="搜索"/>
+                      </form>
+                  </li>
+                <elseif condition="$statusbm eq 'b'"/>
+                  <li style="height:35px;float:right;margin-right:18px;">
+                    <form method="get" action="__APP__/Radmin/Search/systemSearch">
+                        <input type="hidden" name="type" value="systemtag"/>
+                        <input type="hidden" name="typea" value="{$statusbm}"/>
+                        <input style="height:35px;" type="text" id="keyword1" name="beg" required placeholder="起始大标签"/>~
+                        <input style="height:35px;" type="text" id="keyword2" name="end" required placeholder="结束大标签"/>
+                        <input type="submit" value="搜索"/>
+                    </form>
+                  </li>
+                <else/>    
+    				      <li style="height:35px;float:right;margin-right:18px;">
+                      <form method="get" action="__APP__/Radmin/Search/systemSearch">
+                          <input type="hidden" name="type" value="systemtag"/>
+                          <input type="hidden" name="typea" value="m"/>
+                          <input style="height:35px;" type="text" id="keyword3" name="keyword3" required placeholder="小标签"/>
+                          <input type="submit" value="搜索"/>
+                      </form>
+                  </li>
+                  <li style="height:35px;float:right;margin-right:18px;">
+                    <form method="get" action="__APP__/Radmin/Search/systemSearch">
+                        <input type="hidden" name="type" value="systemtag"/>
+                        <input type="hidden" name="typea" value="b"/>
+                        <input style="height:35px;" type="text" id="keyword1" name="beg" required placeholder="起始大标签"/>~
+                        <input style="height:35px;" type="text" id="keyword2" name="end" required placeholder="结束大标签"/>
+                        <input type="submit" value="搜索"/>
+                    </form>
+                  </li>
+              </if>
+    				<li style="height:35px;float:right;margin-right:18px;">
+                  <form method="get" action="__APP__/Radmin/Search/systemSearch">
+                    <input type="hidden" name="type" value="systemagent"/>
+                  	<input type="hidden" name="typea" value="{$statusbm}"/>
+    					      <input type="text" id="agent" placeholder="请输入代理名称" onmouseup="this.select();" maxlength="80" style="width:200px;height:35px;margin-left:10px;"/>
+                    <input type="hidden" id="keywordid" name="keyword" value="">
+                    <input type="submit" value="搜索"/>
+                  </form>
+    				</li>
+
+            <li style="height:35px;float:right;margin-right:18px;">
+              
+                  <form method="get" action="__APP__/Radmin/Search/systemSearch" onsubmit="return checkTime();">
+                    <input type="hidden" name="type" value="systemtime"/>
+                    <input type="hidden" name="typea" value="{$statusbm}"/>
+                    <input style="height:35px;" class="Wdate" name="start_time"type="text" placeholder="开始时间" required onClick="WdatePicker()"/>~
+                    <input style="height:35px;" class="Wdate" name="end_time"type="text" placeholder="结束时间" required onClick="WdatePicker()"/>~
+                    <input type="submit" value="搜索"/>
+                  </form>
+            </li>
+              </ul>
+          </div>
+          
+          <div class="menu">
+              
+              
+          </div>
+  
+      </div>
+      <!--右边内容--> 
+      <div class="main_bd">
+           
+          <div class="mp_news_area notices_box" style="width:1240px;margin:0 auto; ">
+          	<div class="title_bar2" style="width:100px;"><!-- <input style="height:30px;width:40px;" type="button" onclick="bjstock()" value="编辑"/> --> 序号</div>
+              <div class="title_bar2" style="width:150px;">产品名称</div>
+              <div class="title_bar2" style="width:200px;">小标签</div>
+              <div class="title_bar2" style="width:100px;">所属大标签</div>
+              <div class="title_bar2" style="width:50px;">数量</div>
+              <div class="title_bar2" style="width:120px;">发货经销商</div>
+              <div class="title_bar2" style="width:120px;">收货经销商</div>
+              <div class="title_bar2" style="width:90px;">单号</div>
+              <div class="title_bar2" style="width:150px;">出库时间</div>
+              <div class="title_bar2" style="width:150px;">操作</div>
+              <ul class="mp_news_list">
+                  <notempty name="list">
+                      <foreach name="list" item="vo">
+                      <li class="mp_news_item">
+                          <span class="title_bar8" style="width:100px; "><input type="checkbox" name="vid" value="{$vo.id}" />{$vo.id}</span> 
+                          <span class="title_bar8" style="width:150px; ">{$vo.templet_id|toName=###}</span> 
+                          <span class="title_bar8" style="width:200px; ">{$vo.mbeg|default="无"}~{$vo.mend|default="无"}</span>
+                          <span class="title_bar8" style="width:100px; ">{$vo.ptag_name}</span> 
+                          <span class="title_bar8" style="width:50px; ">{$vo.product_num}</span> 
+                          <span class="title_bar8" style="width:120px; "><if condition="$vo.send_id eq 0">系统<else />{$vo.send_id|toAgent=###}</if></span>  
+                          <span class="title_bar8" style="width:120px; ">{$vo.receive_id|toAgent=###}</span> 
+                          <span class="title_bar8" style="width:90px; ">{$vo.orderNumber|default="无"}</span>
+                          <span class="title_bar8" style="width:150px; ">{$vo.time|toDate=###}</span> 
+                          <span class="title_bar8" style="width:150px;">
+                          <input type="button" class="wz2 btn" value="编辑" onClick="javascript:location.href='__APP__/Radmin/Product/edit?id={$vo.id}'"/>
+                          <!-- <neq name="vo.mbeg" value="">
+                              <input type="button" class="wz2 btn" value="编辑" onClick="javascript:location.href='__APP__/Radmin/Product/edit?id={$vo.id}&type=system'"/>
+                          <else/>
+                             <input type="button" class="wz2 btn" value="编辑" onClick="alert('小标签不能编辑');"/>
+                          </neq> -->
+                          <input type="button" class="wz2 btn" value="删除" onClick="sc('{$vo.ptag_name}','__APP__/Radmin/Product/delete?id={$vo.id}')"/>
+                          </span>
+                      </li>
+                      </foreach>
+                  <else/>
+                      <p>无出库记录！<a href="javascript:history.go(-1);">返回上一页</a></p>
+                  </notempty>
+              </ul>
+          </div>
+          <div><center><font color="red">{$page}</font></center></div>
+          <!--5行为一页，方便查看-->
+           <div style="padding-left:33%; padding-top:10px;"> 
+              <span style="font-weight:bold; color:#ff2222;"> 
+              </span> 
+          </div>
+      </div>
+  </div>
+
+  <script type="text/javascript">
+  function checkTime(){
+    var s = $("input[name=start_time]").val();
+    var e = $("input[name=end_time]").val();
+    var res = s.localeCompare(e);
+    if(res == 1){
+      alert('起始时间不能大于结束时间');
+      return false;
+    }
+  }
+  $("#agent").autocomplete({
+    minLength:1,
+    autoFocus:true, 
+    source: function(request, response){
+      $.ajax({
+        url: "__URL__/agent", 
+        dataType: "json",
+        data: {
+          term: request.term,
+        },
+        success: function(data){
+          response($.map(data,function(item){
+            return {
+  //            data: item,
+              label :item.name+'---'+item.levname,
+  //            value :item.agent_name,
+              ID: item.id,
+              XNAME: item.name,
+  //            province: item.agent_province,
+  //            city: item.agent_city,
+            }
+          }));
+        } 
+      }); 
+    },
+    select: function(event, ui){
+  //    $('#order_address').val(ui.item.address+item.agent_city);
+      $('#keywordid').val(ui.item.ID);
+    }
+  });
+  function bjstock(){
+  var managers = document.getElementsByName("vid");
+  var mids = "";    //存放品牌合伙人ID
+  for(var i=0;i<managers.length;i++)
+  {
+    if(managers[i].checked) {
+      mids = mids + '_' + managers[i].value;
+    }
+  }
+  if(mids == '') {
+    alert('请选择至少一个发货记录！');
+    return;
+  }
+  window.location.href="__URL__/stockbj?vid="+mids;
+}
+  </script>
+</body>
+</html>

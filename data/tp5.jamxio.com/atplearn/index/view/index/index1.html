@@ -1,0 +1,71 @@
+<title>目录结构-tp5</title>
+
+下载最新版框架后，解压缩到web目录下面，可以看到初始的目录结构如下：<hr/>
+
+<pre>
+project  应用部署目录
+├─application           应用目录（可设置）
+│  ├─common             公共模块目录（可更改）
+│  ├─index              模块目录(可更改)
+│  │  ├─config.php      模块配置文件
+│  │  ├─common.php      模块函数文件
+│  │  ├─controller      控制器目录
+│  │  ├─model           模型目录
+│  │  ├─view            视图目录
+│  │  └─ ...            更多类库目录
+│  ├─command.php        命令行工具配置文件
+│  ├─common.php         应用公共（函数）文件
+│  ├─config.php         应用（公共）配置文件
+│  ├─database.php       数据库配置文件
+│  ├─tags.php           应用行为扩展定义文件
+│  └─route.php          路由配置文件
+├─extend                扩展类库目录（可定义）
+├─public                WEB 部署目录（对外访问目录）
+│  ├─static             静态资源存放目录(css,js,image)
+│  ├─index.php          应用入口文件
+│  ├─router.php         快速测试文件
+│  └─.htaccess          用于 apache 的重写
+├─runtime               应用的运行时目录（可写，可设置）
+├─vendor                第三方类库目录（Composer）
+├─thinkphp              框架系统目录
+│  ├─lang               语言包目录
+│  ├─library            框架核心类库目录
+│  │  ├─think           Think 类库包目录
+│  │  └─traits          系统 Traits 目录
+│  ├─tpl                系统模板目录
+│  ├─.htaccess          用于 apache 的重写
+│  ├─.travis.yml        CI 定义文件
+│  ├─base.php           基础定义文件
+│  ├─composer.json      composer 定义文件
+│  ├─console.php        控制台入口文件
+│  ├─convention.php     惯例配置文件
+│  ├─helper.php         助手函数文件（可选）
+│  ├─LICENSE.txt        授权说明文件
+│  ├─phpunit.xml        单元测试配置文件
+│  ├─README.md          README 文件
+│  └─start.php          框架引导文件
+├─build.php             自动生成定义文件（参考）
+├─composer.json         composer 定义文件
+├─LICENSE.txt           授权说明文件
+├─README.md             README 文件
+├─think                 命令行入口文件
+</pre>
+<hr>
+<marquee style="color:orange;">
+如果是mac或者linux环境，请确保runtime目录有可写权限
+</marquee>
+5.0的部署建议是public目录作为web目录访问内容，其它都是web目录之外（<span style="color:red;">我认为是直接在虚拟主机修改映射目录，没有其他想法</span>），当然，你必须要修改public/index.php中的相关路径。
+<p>
+如果没法做到这点，请记得设置目录的访问权限或者添加目录列表的<b>保护文件</b>。
+<hr>
+<h3>
+router.php用于php自带webserver支持，可用于快速测试<br>
+启动命令：php -S localhost:8888 router.php
+</h3>
+5.0版本自带了一个完整的应用目录结构和默认的应用入口文件，开发人员可以在这个基础之上灵活调整。
+<p>
+上面的目录结构和名称是可以改变的，尤其是应用的目录结构，这取决于你的入口文件和配置参数。
+<p>
+<b>
+由于ThinkPHP5.0的架构设计对模块的目录结构保留了很多的灵活性，尤其是对于用于存储的目录具有高度的定制化，因此上述的目录结构仅供建议参考。
+</b><em>反而是这灵活性，让选择困难症的人，情何以堪！！！</em>

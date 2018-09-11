@@ -1,0 +1,122 @@
+#!/bin/bash
+### BEGIN INIT INFO
+# Provides:          aegis
+# Required-Start:    $remote_fs $syslog
+# Required-Stop:     $remote_fs $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      
+# Short-Description: aegis update.
+# Description:       aegis client.
+### END INIT INFO
+
+AEGIS_INSTALL_DIR="/usr/local/aegis"
+
+if [ `id -u` -ne "0" ]; then
+    echo "ERROR: Permission denied." 1>&2
+    exit 1
+fi
+
+start() {
+	 "${AEGIS_INSTALL_DIR}"/aegis_update/AliYunDunUpdate &
+}
+
+
+stop() {
+	pkill AliYunDun 2>/dev/null
+	pkill AliHids 2>/dev/null
+}
+
+
+status() {
+	if [ -n "$(ps -ef | grep AliYunDunUpdate | grep -v grep)" ]; then
+		echo "Aegis is running"
+	else
+		echo "Aegis stopped"
+	fi
+}
+
+var=0
+path="/etc/debian_version"
+if [ `uname -n` = "debian" ];
+then
+        if [ -f "$path" ];
+        then
+                var=`awk -F. '{print $1}' $path`
+        fi
+fi
+
+uninstall() {
+    stop
+    sleep 1
+    rm -rf $AEGIS_INSTALL_DIR/aegis_update
+    rm -rf $AEGIS_INSTALL_DIR/aegis_client
+    rm -rf $AEGIS_INSTALL_DIR/alihids
+    
+
+    rm -f /etc/init.d/aegis
+    
+    for ((var=2; var<=5; var++))
+    do
+        if [ -d "/etc/rc${var}.d/" ];
+        then
+            rm -f "/etc/rc${var}.d/S80aegis"
+        elif [ -d "/etc/rc.d/rc${var}.d" ];
+        then
+            rm -f "/etc/rc.d/rc${var}.d/S80aegis"
+        fi
+    done
+    
+    path="/etc/debian_version"
+    if [ -f "$path" -a -s "$path" ];
+    then
+        var=`awk -F. '{print $1}' $path`
+        if [ -z $(echo $var|grep "[^0-9]") ];
+        then
+            if [  $var -ge 6 ];
+            then
+                 echo "insserv -r aegis: remove aegis server"
+                 insserv -r aegis >/dev/null 2>&1
+            fi
+        fi
+    fi
+    
+    echo "uninstall successful"
+}
+
+
+case "$1" in
+    start)
+        start
+        sleep 1
+        status
+    ;;
+
+    stop)
+        stop
+        status
+    ;;
+
+    restart)
+        stop
+        status
+        echo "Aegis restarting..."
+        sleep 1
+        start
+        status
+    ;;
+
+    status)
+        status
+    ;;
+    
+    uninstall)
+        uninstall
+    ;;
+
+    *)
+        echo $"Usage: $0 {start|stop|restart|status|uninstall}"
+        exit 1
+    ;;
+
+esac
+

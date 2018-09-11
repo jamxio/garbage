@@ -1,0 +1,133 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" id="viewport" content="width = device-width, initial-scale = 0.9, minimum-scale = 0.9, maximum-scale = 0.9, user-scalable=no">
+<title>中国象棋</title>
+<meta name="keywords" content="中国象棋,中国象棋html5游戏" />
+<meta name="description" content="中国象棋html5游戏" />
+<style type="text/css">
+html {
+overflow: hidden;
+}
+body {
+font-size: 12px;
+margin: 0;
+padding: 0;
+line-height: 150%;
+}
+#chess {
+-webkit-tap-highlight-color: rgba(0, 0, 0, 0) !important;
+-webkit-tap-highlight-color: transparent;
+-webkit-user-select: none;
+-webkit-focus-ring-color: rgba(0, 0, 0, 0) !important; 
+outline: none !important;
+background: url(images/bg.jpg) repeat;
+}
+.box {
+margin:0 auto;
+width:100%;
+position: relative;
+}
+.chess_left {
+overflow: hidden;
+width: 100%;
+float:left;
+text-align:center
+}
+.chess_right {
+float:left;
+display:none
+}
+.move_info {
+float:left;
+margin-top:20px
+}
+.bill_box {
+height: 335px;
+width: 80px;
+overflow:auto;
+}
+.bill_box li {
+cursor:pointer;
+text-align:left
+}
+.bill_box li:hover {
+cursor:pointer;
+background: #C6A577;
+}
+.bill_box li:active {
+cursor:pointer;
+background: #fff;
+}
+#billList {
+margin-top:20px
+}
+.bn_box {
+display:none;
+}
+#tyroPlay,#normalPlay,#superPlay,#regretBn,#moreGamestBn,#loginBn,#shareGamestBn {
+background:url(images/buttonbg.png) no-repeat; 
+width:90px;
+height:40px;
+border:none;
+font-size: 18px;
+text-align: center;
+padding:0;
+line-height: 35px;
+text-shadow:0 2px 2px rgba(0,0,0,.3);
+margin: 8px 5px;
+font-weight:bold;
+color:white;
+background-size: 100%;
+}
+.btn{text-align: center;overflow:hidden;float:left;}
+</style>
+<script src="../../js/jquery-1.12.3.min.js"></script>
+<script src="../../js/layer/layer.js"></script>
+<script src="../../js/gzacwl.js"></script>
+</head>
+<body>
+<div class="box" id="box">
+<div class="chess_left">
+<canvas id="chess" width="352" height="436"></canvas>
+</div>
+<div class="btn">
+<div class="bn_box" id="bnBox" style="display: block;">
+<input type="button" name="offensivePlay" id="tyroPlay" value="新手开始">
+<input type="button" name="offensivePlay" id="normalPlay" value="中级开始">
+<input type="button" name="offensivePlay" id="superPlay" value="高手开始">
+<input type="button" name="regret" id="regretBn" value="悔 棋">
+<input type="button" name="login" id="loginBn" value="登 录" onclick="login();">
+<input type="button" name="moreGames" id="moreGamestBn" value="更多游戏" onclick="showmore();">
+</div>
+</div>
+<div class="chess_right" id="chessRight">
+<select name="billList" id="billList">
+</select>
+<ol id="billBox" class="bill_box">
+</ol>
+</div>
+</div>
+<script type="text/javascript">
+window.shareData = {
+"imgUrl": "",
+"timeLineLink": "http://www.gzacwl.com/productcenter.html/?t=" + (new Date()).valueOf(),
+"tTitle": "要玩一起玩--中国象棋",
+"tContent": "挑战中国象棋高手大师级，你准备好了吗？"
+};
+
+function showmore(){//更多游戏
+window.location.href="http://www.gzacwl.com/productcenter.html";
+}
+function showme(){//关注我们
+window.location.href="http://www.gzacwl.com/productcenter.html";
+}
+function login(){//登陆
+    game_login();
+}
+</script>
+<script language="javascript" type="text/javascript" src="js/game.js"></script>
+<script src="js/gambit.js"></script>
+<div style="display:none;"><script src="https://s95.cnzz.com/z_stat.php?id=1259929120&web_id=1259929120" language="JavaScript"></script></div>
+</body>
+</html>

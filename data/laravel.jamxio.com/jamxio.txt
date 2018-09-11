@@ -1,0 +1,106 @@
+服务容器(container:applicaiton)，在bootstrap/app.php里面创建容器。并绑定基本的内核单例：http/kernel、console/kernel、debug/execption；
+
+同时，在服务提供者中也可以通过 register() 将“基础接口服务”与“具体实现类”绑定（注册）到容器；尚不清楚 boot() 的实际作用，
+    注册好后，在声明依赖“基础接口服务”的某个位置会实例化一个“具体实现类”注入到作用域里；
+
+除了依赖注入的方式调用之外，可以用App::make(“基础接口服务”)来获取“具体实现类”的实例；
+
+服务提供者(serviceprovider)，在config/app.php：['providers']指定服务提供者列表，主要需实现 注册绑定服务：register() .
+    全部注册完一一执行，不明作用：boot() . 延迟加载提供者,返回该提供者注册的服务容器绑定：provides() & $defer=true 。
+
+门面(facades)，在config/app.php：['aliases'],望文生义，一些类的别名，['Cache' => Illuminate\Support\Facades\Cache::class]可以轻松使用 Cache::get('key');
+    todo:getFacadeAccessor();
+    该函数返回服务容器绑定类的别名，如 Illuminate\Support\Facades\Cache::getFacadeAccessor() 中 return 'cache';
+    该别名服务提供者 \Illuminate\Cache\CacheServiceProvider.php 中绑定了 ./CacheManager.php 文件的 CacheManager 类；
+
+契约(contracts),许多接口规范约定，如container、facades的规范，cache的工厂规范Illuminate\Contracts\Cache\Factory.php,等；契约可以充当框架特性的简明文档。
+
+路由(routing),由路由服务提供者 App\Providers\RouteServiceProvider 注册，使用门面 ['Route' => Illuminate\Support\Facades\Route]指定
+    使用契约 Illuminate/Contracts/Routing/BindingRegistrar.php 和 Illuminate\Contracts\Routing\Registrar.php 的实现 Illuminate\Routing\Router.php
+    作用：构造response内容，分配中间件，资源重定向，根据路由命名生成对应url。
+
+中间件(middleware)，过滤进入应用的HTTP请求，意思即是每个到达后端的请求都先经过中间件（middleware）处理，才进入到路由门面Route指向的闭包里执行；
+    中间件不同于 服务提供者 和 门面 在 config/app.php 中配置，而在每个内核如 Http/Kernel.php 中注册，Kernel 类中主要有三个成员：$middleware .
+    $middlewareGroups . $routeMiddleware ;
+    其中 $middleware 注册后会在“每个”请求到达后“依次”执行数组内所有中间件，
+    $middlewareGroups 将中间件注册成每个组名映射到的中间件组，通常['web']对应于routes/web.php所有请求;相对地['api']用于routes/api.php;
+    $routeMiddleware 应该是在路由 routes/*.php 中动态执行的，不同与前两个的默认执行，需在路由文件中->middleware('name_middleware')等方式引入；
+    也可以在控制器 Controller/*.php 中使用 控制器类的成员函数 middleware('name_middleware') 来动态执行中间件的逻辑；
+    中间件参数：在handle()里可以设置形参，在middleware('name:param')的形式传参；
+    可终止中间件：->terminate($request,$reponse)函数，将在响应发送到浏览器后执行，需在内核中注册成为全局中间件；
+
+CSRF(跨站请求伪造)，为了防止csrf攻击，通常的做法是在定义html表单的时候，引入CRSRF令牌字段，后端CSRF保护中间件 VerifyCsrfToken 会利用其做请求验证。
+    使用 csrf_field() 函数向表单添加令牌字段;使用 csrf_token() 设置<mate name="csrf-token">，js设置请求头 X-CSRF-Token ；
+    用 Cookie:XSRF-TOKEN 设置 X-XSRF-TOKEN，一些js框架如 angular 会自动设置；
+    VerifyCrsfToken中间件被添加到 web 中间件组中，意思是所有属于 web 类型的请求，都默认会验证 crsf-token ；
+    如果需要在应用中排除一些url的表单，须在 routes/web.php 之外定义路由，或者在中间件的“排除url”数组成员中 protected $except = [ 'stripe/*',]指明;
+
+控制器(controller),是 MVC 中的中控C，选择执行中间件，调配模型数据，展示不同视图。
+    路由将请求指向控制器，并不需要写“完全限定类型名称”，如 Closure:'Photos\AdminController@method' ,因为在服务提供者（RouteServiceProvider）中已定义
+        成员 $namespage = 'App\Http\Controllers' ,而且路由获取的参数会传到控制器的方法的“形参”以供使用；
+    控制器里可以在任何地方自由分配中间件，使用 middleware() 方法即可；
+    控制器的 构造函数 和 方法 都可以在形参里写( TYPE $name_param )的形式，指定依赖的参数类型，剩下的交给服务容器，假如容器里有绑定该类型的实现类，则自动
+        构造一个实现类型的依赖类对象注入到该位置中去，如果没进行过绑定，则实例指定类型的对象注入。其他非依赖形参写在后面即可；
+    路由缓存，如果路由完全基于控制器路由可以将路由缓存起来（artisan route:cacke），不用每次都注册路由以提高效率；
+
+请求(Request),应用容器根据请求自动实例的一个请求对象，可以通过 Illuminate\Http\Request 类型提示后，将其注入到控制器的方法，或者路由闭包；
+    ->path()：获取uri；->is():验证url模式；->url()：不含 查询字符串（?）;->fullurl():带查询字符串的url；->method(),->isMethod():请求方法；
+    获取输入：input(),all(),only(),except(),has(),直接用对象引用属性的方式（obj->property）;
+    一次性表单输入缓存(取出销毁)：flash(),flashOnly(),flashExcept()存入;redirect()->withInput()存入后重定向;方法old()，全局辅助函数old()取出;
+    获取Cookie：cookie(),对应的response()->cookie()可以设置Cookie值；
+    文件：->file()以文件表单名获取文件上传对象；->hasFile()验证是否存在上传文件；->file()->isValid()判断是否上传成功；
+        ->path()绝对路径,->extension()根据文件内容判断文件类型。->store(),保存文件（自动生成文件名），->storeAs()自定义文件名保存；
+
+响应(Response)，多种响应方式；
+    Route门面的闭包参数或控制器方法
+    直接返回基本数据 字符串|数组 return string：框架会转化成完整响应；return array:转化成一个json响应（Eloquent集合亦适用）；
+    return response():返回一个完整的 Illuminate\Http\Response 响应实例，附加 ->header($header1)->header($header2)可以指定头信息(withHeaders([])也行)；
+        ->cookie()；设置Cookie，默认会加密，在App\Http\Middleware\EncryptCookies::$except数组中可以排除cookie名称的加密；
+    重定向：redirect()使用实例Illuminate\Routing\Redirector ，方法->route($name_route)可以获取到route注册好的路由url并重定向；
+        方法->action('controller@method',['param'=>$value])：可以重定向到指定控制器动作；
+        方法->with()可以配置一次性session；
+    返回视图：在使用响应实例response()->view()或辅助函数view();两种区别在于，第一种依然可以指定头信息header();
+    返回JSON：response()->json();包括Content-Type:text/json;和json_encode();（jsonp）withCallback('callback')不返回json数据,但可以在js用callback()获取到;
+    文件：下载response()->download($pathToFile, $name, $headers);显示->file($pathToFile, $headers);$headers参数添加头(可选)；
+    响应宏：服务提供者的boot()中编写Response::macro('caps',Closure)；就可以多个地方复用这个宏：reponse()->caps($param);
+
+会话状态(Session)，支持流行后端驱动Memcached,Redis和数据库；默认情况下，使用文件驱动。
+    Session数据存放:file - storage/framework/sessions/;cookie - 加密Cookie;database - 数据库中；memcached/redis - 缓存服务器；array -简单数组，非持久
+    获取session数据：Illuminate\Http\Request $request->session()->get();辅助函数session();获取所有值$request->session()->all();->has(),存在且不为null；
+        ->exists(),存在（null也行）；
+    设置session：$request->session()->put('key','value');session(['key'=>'value']);->push(),将值加入键名数组内；->pull()，取出键名的session值并删除;
+        一次性：$request->session()->flash();保留上一次的数据到下一次：->reflash();keep('username'),保留特定的数据;
+        删除数据：forget('key'),flush();
+        重新生成sessionID：request->session()->regenerate();
+    自定义驱动：在任何地方创建一个实现SessionHandlerInterface 接口的类；
+    注册驱动：在App\Providers创建SessionServiceProvider服务提供者，并在config/app.php中注册，boot()里面写用Session门面的
+        extend('mongo',function($app){ return implementation of SessionHandlerInterface...});然后就可以在config/session.php | .env配置mongo驱动名字
+
+验证(Validate),验证基类在ValidateRequest trait，该类被App\Http\Controllers\Controller.php里面use，故控制器中使用$this->validate()可以进行验证；
+    错误信息：Illuminate\Support\MessageBag $errors 总会存在于模板中，原因是被中间件 Illuminate\View\Middleware\ShareErrorsFromSession 绑定到视图；
+    验证出错的表单请求将会被重定向会原来的url；然而ajax请求却不会被重定向，会响应一个带错误信息的422响应；
+    Validator::make():除了$this->validate()外,手动创建验证器，使用门面Validator::make()，第一个参数是数据如$request->all(),第二个参数是验证规则，
+        第三个是提示信息 如'required'=>'the :artibute is required'；
+        返回的实例有一个fails()方法,可以获知验证是否通过
+
+视图(view):用view()或门面View::make()创建视图实例，return即可以得到渲染效果，第二参数或者使用->with($param)可以传值到视图
+    共享视图：在服务提供者中的boot()方法里，可以使用视图实例的->share($data)方法使得参数中的data数据在本应用所有的视图可以使用；
+    视图composer：视图被渲染时，在服务提供者boot()中用view()->composer($name_view,Closure)可以在$name_view视图渲染前执行该Closure，composer应该意为
+        视图依赖，因为每当页面渲染前都会执行Closure参数或者Closure::compose()，应该会应用于视图所依赖的数据的处理；Closure依赖View $view;
+        $name_view可接受array表示一组视图依赖该composer，也可传入'*'通配所有的视图依赖该composer；
+        视图创建器：creator()，跟composer相似，在视图视图实例化立即失效，而composer是等到即将渲染；
+
+模板引擎(Blade)：简单但强大的模板引擎，说是基本零开销，其实应该是说的模板缓存技术；视图文件使用.blade.php的扩展名，存放在resource/views目录；
+    @：@开始是模板标签，@前面必须是空白字符tab或enter，space，否则不渲染；{{}}：用来解析变量或返回值如函数、运算表达式；
+    模板继承：@yield 抽象占位，不强制实现；
+        @section @show 在父级表示可继承占位， @section @show 在子级使用时子级的内容将会被渲染两次;
+        @extends子级使用,继承父级模板则可以用@parent原样渲染父级占位内容
+        @parent得到的内容包含父级占位符，即子级的子级如果继续@section实现该占位符依然可以渲染；
+        @section @endsection:实现一个父级继承而来的占位符；如果父级没有则渲染无效；
+        @section @stop:不明白与endsection 的区别；
+    {{!! $html !!}}:意思是，内容原样输出，不做html转义；可能有xss攻击；{{-- --}}不同于<!-- -->，解析html文档不会有任何该部分的内容；
+    @{{ }}:目的是为了与js框架的双花括号立异；@verbatim @endverbatim 可以让大部分js框架代码中的blade:@{{}}继续使用{{}}不被javascript框架解析；
+    @if @else @endif:等流程控制很简单；
+    @component @endcomponent:像小程序的<templet></templet>;服务提供者中boot()注册别名Blade::component('components.alert', 'alert');
+        可以直接用@alert;
+    @json：json化数组

@@ -1,0 +1,13 @@
+{"c2dictionary":true, "data":{
+	"facebookPage":"http://game.gzacwl.com",
+	"twitterPage":"http://game.gzacwl.com",
+	"googlePage":"http://game.gzacwl.com",
+	"rateUs":"http://game.gzacwl.com",
+	"moreGames":"http://game.gzacwl.com",
+	"shareMessage":"我刚刚在舞动的音符中拿了 $score 分 !",
+	"label_score":"分数",
+	"label_best":"最高",
+	"label_paused":"游戏暂停",
+	"label_over":"游戏结束",
+	"label_quit":"你确定要退出吗?"
+}}

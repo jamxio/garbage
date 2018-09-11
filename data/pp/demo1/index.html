@@ -1,0 +1,2065 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Bootstrap Demo</title>
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+    <script type="text/javascript" src="js/echarts.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <script type="text/javascript" src="js/bootstrap.js"></script>
+    <!-- HTML5 Shim 和 Respond.js 用于让 IE8 支持 HTML5元素和媒体查询 -->
+    <!-- 注意： 如果通过 file://  引入 Respond.js 文件，则该文件无法起效果 -->
+    <!--[if lt IE 9]>
+       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+       <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+    <script src="js/jquery.nicescroll.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script type="text/javascript" src="js/index.js"></script>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="sidebar-nav">
+                <div class="pull-left">
+                    <div class="icon"></div>
+                    <div class="menu">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#sidebar-right">
+                            <span class="sr-only">切换导航</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+                </div>
+                <div class="collapse in fade right" id="sidebar-right">
+                    <h4 class="logo">
+                        <a href="index.html">ECharts Demo</a>
+                    </h4>
+                    <div style="height: 42px"></div>
+                    <div class="panel-group" id="nav-container">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" data-toggle="collapse" data-parent="#nav-container" href="#navOne">
+                                <h4 class="panel-title">
+                                    教程
+                                    <a href="#" class="close glyphicon glyphicon-chevron-down"></a>
+                                </h4>
+                            </div>
+                            <div id="navOne" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <ul class="nav nav-pills nav-stacked">
+                                        <li><a href="#tab_1" data-toggle="tab">自己实现拖拽</a></li>
+                                        <li><a href="#tab_2" data-toggle="tab">上证指数</a></li>
+                                        <li><a href="#tab_3" data-toggle="tab">Demo</a></li>
+                                        <li><a href="#tab_4" data-toggle="tab">ECharts事件</a></li>
+                                        <li><a href="#tab_5" data-toggle="tab">折线图</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading" data-toggle="collapse" data-parent="#nav-container" href="#navTwo">
+                                <h4 class="panel-title">
+                                    示例
+                                    <a href="#" class="close glyphicon glyphicon-chevron-down"></a>
+                                </h4>
+                            </div>
+                            <div id="navTwo" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <ul class="nav nav-pills nav-stacked">
+                                        <li><a href="#home" data-toggle="tab">Home</a></li>
+                                        <li><a href="#svn" data-toggle="tab">SVN</a></li>
+                                        <li><a href="#ios" data-toggle="tab">iOS</a></li>
+                                        <li><a href="#java" data-toggle="tab">Java</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--./sidebar-nav-->
+            <div class="tab-content main">
+                <div class="tab-pane fade in" id="tab_1">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div id="echarts_1" style="width: 600px; height: 400px;" class="center-block"></div>
+                            <script type="text/javascript">
+                            $(function() {
+                                myCharts.push({
+                                    paneId: "tab_1",
+                                    domId: "echarts_1",
+                                    show: ShowECharts,
+                                });
+
+                                function ShowECharts(myChart) {
+                                    var symbolSize = 20;
+                                    // 这个 data 变量在这里单独声明，在后面也会用到。
+                                    var data = [
+                                        [15, 0],
+                                        [-50, 10],
+                                        [-56.5, 20],
+                                        [-46.5, 30],
+                                        [-22.1, 40]
+                                    ];
+                                    myChart.setOption({
+                                        xAxis: {
+                                            min: -100,
+                                            max: 80,
+                                            type: 'value',
+                                            axisLine: { onZero: false }
+                                        },
+                                        yAxis: {
+                                            min: -30,
+                                            max: 60,
+                                            type: 'value',
+                                            axisLine: { onZero: false }
+                                        },
+                                        series: [{
+                                            id: 'a',
+                                            type: 'line',
+                                            smooth: true,
+                                            symbolSize: symbolSize, // 为了方便拖拽，把 symbolSize 尺寸设大了。
+                                            data: data
+                                        }],
+                                        tooltip: {
+                                            // 表示不使用默认的『显示』『隐藏』触发规则。
+                                            triggerOn: 'none',
+                                            formatter: function(params) {
+                                                return 'X: ' + params.data[0].toFixed(2) + '<br>Y: ' + params.data[1].toFixed(2);
+                                            }
+                                        },
+                                        backgroundColor: '#F3F3F3',
+                                        title: { text: '自己实现拖拽' },
+                                        dataZoom: [{
+                                                type: 'slider',
+                                                xAxisIndex: 0,
+                                                start: 10,
+                                                end: 60
+                                            },
+                                            {
+                                                type: 'inside',
+                                                xAxisIndex: 0,
+                                                start: 10,
+                                                end: 60
+                                            },
+                                            {
+                                                type: 'slider',
+                                                yAxisIndex: 0,
+                                                start: 30,
+                                                end: 80
+                                            },
+                                            {
+                                                type: 'inside',
+                                                yAxisIndex: 0,
+                                                start: 30,
+                                                end: 80
+                                            }
+                                        ],
+                                    });
+
+                                    myChart.setOption({
+                                        // 声明一个 graphic component，里面有若干个 type 为 'circle' 的 graphic elements。
+                                        // 这里使用了 echarts.util.map 这个帮助方法，其行为和 Array.prototype.map 一样，但是兼容 es5 以下的环境。
+                                        // 用 map 方法遍历 data 的每项，为每项生成一个圆点。
+                                        graphic: echarts.util.map(data, function(dataItem, dataIndex) {
+                                            return {
+                                                // 'circle' 表示这个 graphic element 的类型是圆点。
+                                                type: 'circle',
+
+                                                shape: {
+                                                    // 圆点的半径。
+                                                    r: symbolSize / 2
+                                                },
+                                                // 用 transform 的方式对圆点进行定位。position: [x, y] 表示将圆点平移到 [x, y] 位置。
+                                                // 这里使用了 convertToPixel 这个 API 来得到每个圆点的位置，下面介绍。
+                                                position: myChart.convertToPixel('grid', dataItem),
+
+                                                // 这个属性让圆点不可见（但是不影响他响应鼠标事件）。
+                                                invisible: true,
+                                                // 这个属性让圆点可以被拖拽。
+                                                draggable: true,
+                                                // 把 z 值设得比较大，表示这个圆点在最上方，能覆盖住已有的折线图的圆点。
+                                                z: 100,
+                                                // 此圆点的拖拽的响应事件，在拖拽过程中会不断被触发。下面介绍详情。
+                                                // 这里使用了 echarts.util.curry 这个帮助方法，意思是生成一个与 onPointDragging
+                                                // 功能一样的新的函数，只不过第一个参数永远为此时传入的 dataIndex 的值。
+                                                ondrag: echarts.util.curry(onPointDragging, dataIndex),
+                                                onmousemove: echarts.util.curry(showTooltip, dataIndex),
+                                                onmouseout: echarts.util.curry(hideTooltip, dataIndex),
+                                            };
+                                        })
+                                    });
+
+                                    // 拖拽某个圆点的过程中会不断调用此函数。
+                                    // 此函数中会根据拖拽后的新位置，改变 data 中的值，并用新的 data 值，重绘折线图，从而使折线图同步于被拖拽的隐藏圆点。
+                                    function onPointDragging(dataIndex) {
+                                        // 这里的 data 就是本文最初的代码块中声明的 data，在这里会被更新。
+                                        // 这里的 this 就是被拖拽的圆点。this.position 就是圆点当前的位置。
+                                        data[dataIndex] = myChart.convertFromPixel('grid', this.position);
+                                        // 用更新后的 data，重绘折线图。
+                                        myChart.setOption({
+                                            series: [{
+                                                id: 'a',
+                                                data: data
+                                            }]
+                                        });
+                                    }
+
+                                    window.addEventListener('resize', updatePosition);
+                                    myChart.on('dataZoom', updatePosition);
+
+                                    function updatePosition() {
+                                        myChart.setOption({
+                                            graphic: echarts.util.map(data, function(item, dataIndex) {
+                                                return {
+                                                    position: myChart.convertToPixel('grid', item)
+                                                };
+                                            })
+                                        });
+                                    }
+
+                                    function showTooltip(dataIndex) {
+                                        myChart.dispatchAction({
+                                            type: 'showTip',
+                                            seriesIndex: 0,
+                                            dataIndex: dataIndex
+                                        });
+                                    }
+
+                                    function hideTooltip(dataIndex) {
+                                        myChart.dispatchAction({
+                                            type: 'hideTip'
+                                        });
+                                    }
+                                }
+                            });
+                            </script>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="tab_2">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div id="echarts_2"></div>
+                            <script type="text/javascript">
+                            $(function() {
+                                myCharts.push({
+                                    paneId: "tab_2",
+                                    domId: "echarts_2",
+                                    show: ShowECharts,
+                                    size: "fill",
+                                });
+
+                                function ShowECharts(myChart) {
+                                    function calculateMA(dayCount, data) {
+                                        var result = [];
+                                        for (var i = 0, len = data.length; i < len; i++) {
+                                            if (i < dayCount) {
+                                                result.push('-');
+                                                continue;
+                                            }
+                                            var sum = 0;
+                                            for (var j = 0; j < dayCount; j++) {
+                                                sum += data[i - j][1];
+                                            }
+                                            result.push(sum / dayCount);
+                                        }
+                                        return result;
+                                    }
+
+                                    $.get("data/上证指数.json", function(rawData) {
+                                        var dates = rawData.map(function(item) {
+                                            return item[0];
+                                        });
+                                        var data = rawData.map(function(item) {
+                                            return [+item[1], +item[2], +item[5], +item[6]];
+                                        });
+                                        var option = {
+                                            backgroundColor: '#21202D',
+                                            legend: {
+                                                data: ['日K', 'MA5', 'MA10', 'MA20', 'MA30'],
+                                                inactiveColor: '#777',
+                                                textStyle: {
+                                                    color: '#fff'
+                                                }
+                                            },
+                                            tooltip: {
+                                                trigger: 'axis',
+                                                axisPointer: {
+                                                    animation: false,
+                                                    type: 'cross',
+                                                    lineStyle: {
+                                                        color: '#376df4',
+                                                        width: 2,
+                                                        opacity: 1
+                                                    }
+                                                }
+                                            },
+                                            xAxis: {
+                                                type: 'category',
+                                                data: dates,
+                                                axisLine: { lineStyle: { color: '#8392A5' } }
+                                            },
+                                            yAxis: {
+                                                scale: true,
+                                                axisLine: { lineStyle: { color: '#8392A5' } },
+                                                splitLine: { show: false }
+                                            },
+                                            grid: {
+                                                bottom: 80
+                                            },
+                                            dataZoom: [{
+                                                textStyle: {
+                                                    color: '#8392A5'
+                                                },
+                                                handleIcon: 'M10.7,11.9v-1.3H9.3v1.3c-4.9,0.3-8.8,4.4-8.8,9.4c0,5,3.9,9.1,8.8,9.4v1.3h1.3v-1.3c4.9-0.3,8.8-4.4,8.8-9.4C19.5,16.3,15.6,12.2,10.7,11.9z M13.3,24.4H6.7V23h6.6V24.4z M13.3,19.6H6.7v-1.4h6.6V19.6z',
+                                                handleSize: '80%',
+                                                dataBackground: {
+                                                    areaStyle: {
+                                                        color: '#8392A5'
+                                                    },
+                                                    lineStyle: {
+                                                        opacity: 0.8,
+                                                        color: '#8392A5'
+                                                    }
+                                                },
+                                                handleStyle: {
+                                                    color: '#fff',
+                                                    shadowBlur: 3,
+                                                    shadowColor: 'rgba(0, 0, 0, 0.6)',
+                                                    shadowOffsetX: 2,
+                                                    shadowOffsetY: 2
+                                                },
+                                            }, {
+                                                type: 'inside'
+                                            }],
+                                            series: [{
+                                                    type: 'candlestick',
+                                                    name: '日K',
+                                                    data: data,
+                                                    itemStyle: {
+                                                        normal: {
+                                                            color: '#FD1050',
+                                                            color0: '#0CF49B',
+                                                            borderColor: '#FD1050',
+                                                            borderColor0: '#0CF49B'
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    name: 'MA5',
+                                                    type: 'line',
+                                                    data: calculateMA(5, data),
+                                                    smooth: true,
+                                                    showSymbol: false,
+                                                    lineStyle: {
+                                                        normal: {
+                                                            width: 1
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    name: 'MA10',
+                                                    type: 'line',
+                                                    data: calculateMA(10, data),
+                                                    smooth: true,
+                                                    showSymbol: false,
+                                                    lineStyle: {
+                                                        normal: {
+                                                            width: 1
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    name: 'MA20',
+                                                    type: 'line',
+                                                    data: calculateMA(20, data),
+                                                    smooth: true,
+                                                    showSymbol: false,
+                                                    lineStyle: {
+                                                        normal: {
+                                                            width: 1
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    name: 'MA30',
+                                                    type: 'line',
+                                                    data: calculateMA(30, data),
+                                                    smooth: true,
+                                                    showSymbol: false,
+                                                    lineStyle: {
+                                                        normal: {
+                                                            width: 1
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        };
+                                        myChart.setOption(option);
+                                    });
+                                }
+                            });
+                            </script>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="tab_3">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div id="echarts_3"></div>
+                            <div class="echarts-toolbar">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">切换
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" id="echart-tab" role="menu">
+                                        <li>
+                                            <div class="btn-group" data-toggle="buttons">
+                                                <label class="btn btn-primary" id="demo_Day">
+                                                    <input type="radio">日线
+                                                </label>
+                                                <label class="btn btn-primary" id="demo_Minute">
+                                                    <input type="radio">1分钟
+                                                </label>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <button class="btn btn-default" data-toggle="modal" title="添加图表" data-target="#index-model" id="add-index">
+                                    <a href="#" class="glyphicon glyphicon-plus"></a>
+                                </button>
+                                <script type="text/javascript">
+                                $(function() {
+                                    $("#add-index").tooltip({ placement: 'top' });
+                                });
+                                </script>
+                            </div>
+                            <script type="text/javascript">
+                            $(function() {
+                                myCharts.push({
+                                    paneId: "tab_3",
+                                    domId: "echarts_3",
+                                    show: ShowECharts,
+                                    size: "fill",
+                                    static: true
+                                });
+
+                                function ShowECharts(myChart) {
+                                    var dom = myChart.getDom();
+                                    var top = 36;
+                                    var bottom = 65;
+                                    var left = 30;
+                                    var right = 75;
+                                    var baseOption = {
+                                        backgroundColor: '#0F0F0F',
+                                        xAxis: { data: [] },
+                                        yAxis: {},
+                                        series: [{
+                                            type: 'line',
+                                            data: []
+                                        }],
+                                        grid: [{
+                                            x: left,
+                                            y: top,
+                                            x2: bottom,
+                                            y2: right
+                                        }],
+                                        title: [{
+                                            text: "请选择图表",
+                                            left: left,
+                                            top: top,
+                                            textStyle: {
+                                                color: "#888"
+                                            }
+                                        }],
+                                    };
+                                    myChart.setOption(baseOption);
+                                    var options = {
+                                        "day": {},
+                                        "oneMinute": {}
+                                    };
+                                    $("#demo_Day").on('click', function() {
+                                        if ($.isEmptyObject(options.day)) {
+                                            $(dom).css('z-index', -1);
+                                            myChart.showLoading();
+                                            setTimeout(function() {
+                                                LoadDay();
+                                            }, 2000);
+                                        } else {
+                                            myChart.clear();
+                                            myChart.setOption(options.day);
+                                            myChart.option = options.day;
+                                        }
+                                    });
+                                    $("#demo_Minute").on('click', function() {
+                                        if ($.isEmptyObject(options.oneMinute)) {
+                                            $(dom).css('z-index', -1);
+                                            myChart.showLoading();
+                                            setTimeout(function() {
+                                                LoadMinute();
+                                            }, 2000);
+                                        } else {
+                                            myChart.clear();
+                                            myChart.setOption(options.oneMinute);
+                                            myChart.option = options.oneMinute;
+                                        }
+                                    });
+
+                                    $("#add-index").click(function() {
+                                        $("#index-confirm").one('click', function() {
+                                            if (!$.isEmptyObject(myChart.option))
+                                                AddIndex();
+                                        });
+                                    });
+
+                                    function LoadDay() {
+                                        $.ajax({
+                                            url: 'data/demoDay.json',
+                                            type: 'get',
+                                            dataType: 'json',
+                                            timeout: 5000,
+                                            async: true,
+                                            success: function(rawData, status) {
+                                                var data = splitData(rawData.ShareModel);
+                                                var Kdata = data.values.map(function(item) {
+                                                    return [+item[1], +item[2], +item[3], +item[4]];
+                                                });
+                                                var option = {
+                                                    backgroundColor: '#0F0F0F',
+                                                    xAxis: [{
+                                                        data: data.categoryData,
+                                                        axisLine: { onZero: false },
+                                                        splitLine: {
+                                                            show: true,
+                                                            lineStyle: {
+                                                                color: "#555"
+                                                            }
+                                                        },
+                                                        min: 'dataMin',
+                                                        max: 'dataMax',
+                                                        axisLabel: { color: "#1476D4" },
+                                                    }, ],
+                                                    yAxis: [{
+                                                        scale: true,
+                                                        axisLabel: {
+                                                            color: "#00FF00"
+                                                        },
+                                                        splitLine: {
+                                                            lineStyle: {
+                                                                color: "#555"
+                                                            }
+                                                        },
+                                                        position: "right",
+                                                    }, ],
+                                                    series: [{
+                                                            name: "OHLC线",
+                                                            type: 'custom',
+                                                            renderItem: renderItem,
+                                                            encode: {
+                                                                x: 0,
+                                                                y: [1, 2, 3, 4],
+                                                                tooltip: [1, 2, 3, 4]
+                                                            },
+                                                            dimensions: ['open', 'close', 'lowest', 'highest'],
+                                                            data: data.values,
+                                                        },
+                                                        {
+                                                            type: 'candlestick',
+                                                            name: 'K线图',
+                                                            data: Kdata,
+                                                            itemStyle: {
+                                                                normal: {
+                                                                    color: '#FD1050',
+                                                                    color0: '#0CF49B',
+                                                                    borderColor: '#FD1050',
+                                                                    borderColor0: '#0CF49B'
+                                                                }
+                                                            }
+                                                        },
+                                                        {
+                                                            name: 'MA5',
+                                                            data: calculateMA(5, Kdata),
+                                                            type: 'line',
+                                                            smooth: true,
+                                                            showSymbol: false,
+                                                            lineStyle: {
+                                                                normal: {
+                                                                    width: 1
+                                                                }
+                                                            }
+                                                        },
+                                                        {
+                                                            name: 'MA10',
+                                                            data: calculateMA(10, Kdata),
+                                                            type: 'line',
+                                                            smooth: true,
+                                                            showSymbol: false,
+                                                            lineStyle: {
+                                                                normal: {
+                                                                    width: 1
+                                                                }
+                                                            }
+                                                        },
+                                                        {
+                                                            name: 'MA20',
+                                                            data: calculateMA(20, Kdata),
+                                                            type: 'line',
+                                                            smooth: true,
+                                                            showSymbol: false,
+                                                            lineStyle: {
+                                                                normal: {
+                                                                    width: 1
+                                                                }
+                                                            }
+                                                        },
+                                                        {
+                                                            name: 'MA30',
+                                                            data: calculateMA(30, Kdata),
+                                                            type: 'line',
+                                                            smooth: true,
+                                                            showSymbol: false,
+                                                            lineStyle: {
+                                                                normal: {
+                                                                    width: 1
+                                                                }
+                                                            }
+                                                        }
+                                                    ],
+                                                    legend: [{
+                                                        top: 5,
+                                                        left: 110,
+                                                        data: ['OHLC线', 'K线图', 'MA5', 'MA10', 'MA20', 'MA30'],
+                                                        textStyle: {
+                                                            color: '#fff'
+                                                        },
+                                                        selected: {
+                                                            'OHLC线': true,
+                                                            'K线图': false,
+                                                            'MA5': false,
+                                                            'MA10': false,
+                                                            'MA20': false,
+                                                            'MA30': false
+                                                        }
+                                                    }, ],
+                                                    grid: [{
+                                                        x: left,
+                                                        y: top,
+                                                        x2: right,
+                                                        y2: bottom
+                                                    }],
+                                                    title: [{
+                                                        text: "日线",
+                                                        left: left,
+                                                        top: top,
+                                                        textStyle: {
+                                                            color: "#888"
+                                                        }
+                                                    }],
+                                                    dataZoom: [{
+                                                            type: 'inside',
+                                                            start: 60,
+                                                        },
+                                                        {
+                                                            type: 'slider',
+                                                            start: 60,
+                                                            handleIcon: 'M10.7,11.9v-1.3H9.3v1.3c-4.9,0.3-8.8,4.4-8.8,9.4c0,5,3.9,9.1,8.8,9.4v1.3h1.3v-1.3c4.9-0.3,8.8-4.4,8.8-9.4C19.5,16.3,15.6,12.2,10.7,11.9z M13.3,24.4H6.7V23h6.6V24.4z M13.3,19.6H6.7v-1.4h6.6V19.6z',
+                                                            handleSize: "80%",
+                                                            dataBackground: {
+                                                                areaStyle: {
+                                                                    color: '#3891c2'
+                                                                },
+                                                                lineStyle: {
+                                                                    color: '#3891c2'
+                                                                }
+                                                            },
+                                                            handleStyle: {
+                                                                color: '#fff',
+                                                                shadowBlur: 3,
+                                                                shadowColor: 'rgba(0, 0, 0, 0.6)',
+                                                                shadowOffsetX: 2,
+                                                                shadowOffsetY: 2
+                                                            },
+                                                            textStyle: {
+                                                                color: "#fff"
+                                                            },
+                                                            fillerColor: "rgba(20,118,212,0.4)",
+                                                            backgroundColor: "#3A3A3A"
+                                                        }
+                                                    ],
+                                                    tooltip: {
+                                                        trigger: 'axis',
+                                                        confine: true,
+                                                        axisPointer: {
+                                                            type: 'cross',
+                                                            crossStyle: {
+                                                                type: "solid",
+                                                                color: "#00ff00"
+                                                            },
+                                                            z: 4
+                                                        },
+                                                        backgroundColor: '#333',
+                                                        borderWidth: 2,
+                                                        borderColor: '#fff',
+                                                        padding: [10, 20],
+                                                        textStyle: {
+                                                            color: '#fff',
+                                                            fontSize: 12,
+                                                        },
+                                                        position: function(pos, params, el, elRect, size) {
+                                                            var obj = { top: 60 };
+                                                            obj[['left', 'right'][+(pos[0] < size.viewSize[0] / 2)]] = 30;
+                                                            return obj;
+                                                        },
+                                                    },
+                                                    axisPointer: {
+                                                        link: { xAxisIndex: 'all' },
+                                                        label: {
+                                                            backgroundColor: '#777',
+                                                            show: true,
+                                                            textStyle: {
+                                                                color: "#fff"
+                                                            }
+                                                        },
+                                                        lineStyle: {
+                                                            color: "#00ff00",
+                                                            type: "solid"
+                                                        },
+                                                        z: 4
+                                                    },
+                                                    toolbox: {
+                                                        feature: {
+                                                            restore: {},
+                                                            saveAsImage: {}
+                                                        },
+                                                        z: 3
+                                                    },
+                                                };
+                                                try {
+                                                    myChart.clear();
+                                                    myChart.setOption(option);
+                                                    myChart.option = options.day = option;
+                                                } catch (err) {
+                                                    console.log(err);
+                                                }
+                                            },
+                                            error: function(data, status) {
+                                                console.log(status + ':' + data.status + ' ' + data.statusText);
+                                            },
+                                            complete: function() {
+                                                myChart.hideLoading();
+                                                $(dom).css('z-index', 0);
+                                            }
+                                        });
+                                    }
+
+                                    function LoadMinute() {
+                                        $.ajax({
+                                            url: 'data/demoMinute.json',
+                                            type: 'get',
+                                            dataType: 'json',
+                                            timeout: 5000,
+                                            async: true,
+                                            error: function(data, status) {
+                                                console.log(status + ':' + data.status + ' ' + data.statusText);
+                                            },
+                                            complete: function() {
+                                                myChart.hideLoading();
+                                                $(dom).css('z-index', 0);
+                                            },
+                                            success: function(rawData, status) {
+                                                var data = splitData(rawData.ShareModel);
+                                                var Kdata = data.values.map(function(item) {
+                                                    return [+item[1], +item[2], +item[3], +item[4]];
+                                                });
+                                                var option = {
+                                                    backgroundColor: '#0F0F0F',
+                                                    xAxis: [{
+                                                        data: data.categoryData,
+                                                        axisLine: { onZero: false },
+                                                        splitLine: {
+                                                            show: true,
+                                                            lineStyle: {
+                                                                color: "#555"
+                                                            }
+                                                        },
+                                                        min: 'dataMin',
+                                                        max: 'dataMax',
+                                                        axisLabel: { color: "#1476D4" },
+                                                    }, ],
+                                                    yAxis: [{
+                                                        scale: true,
+                                                        axisLabel: {
+                                                            color: "#00FF00"
+                                                        },
+                                                        splitLine: {
+                                                            lineStyle: {
+                                                                color: "#555"
+                                                            }
+                                                        },
+                                                        position: "right",
+                                                    }, ],
+                                                    series: [{
+                                                            name: "OHLC线",
+                                                            type: 'custom',
+                                                            renderItem: renderItem,
+                                                            encode: {
+                                                                x: 0,
+                                                                y: [1, 2, 3, 4],
+                                                                tooltip: [1, 2, 3, 4]
+                                                            },
+                                                            dimensions: ['open', 'close', 'lowest', 'highest'],
+                                                            data: data.values,
+                                                        },
+                                                        {
+                                                            type: 'candlestick',
+                                                            name: 'K线图',
+                                                            data: Kdata,
+                                                            itemStyle: {
+                                                                normal: {
+                                                                    color: '#FD1050',
+                                                                    color0: '#0CF49B',
+                                                                    borderColor: '#FD1050',
+                                                                    borderColor0: '#0CF49B'
+                                                                }
+                                                            }
+                                                        },
+                                                        {
+                                                            name: 'MA5',
+                                                            data: calculateMA(5, Kdata),
+                                                            type: 'line',
+                                                            smooth: true,
+                                                            showSymbol: false,
+                                                            lineStyle: {
+                                                                normal: {
+                                                                    width: 1
+                                                                }
+                                                            }
+                                                        },
+                                                        {
+                                                            name: 'MA10',
+                                                            data: calculateMA(10, Kdata),
+                                                            type: 'line',
+                                                            smooth: true,
+                                                            showSymbol: false,
+                                                            lineStyle: {
+                                                                normal: {
+                                                                    width: 1
+                                                                }
+                                                            }
+                                                        },
+                                                        {
+                                                            name: 'MA20',
+                                                            data: calculateMA(20, Kdata),
+                                                            type: 'line',
+                                                            smooth: true,
+                                                            showSymbol: false,
+                                                            lineStyle: {
+                                                                normal: {
+                                                                    width: 1
+                                                                }
+                                                            }
+                                                        },
+                                                        {
+                                                            name: 'MA30',
+                                                            data: calculateMA(30, Kdata),
+                                                            type: 'line',
+                                                            smooth: true,
+                                                            showSymbol: false,
+                                                            lineStyle: {
+                                                                normal: {
+                                                                    width: 1
+                                                                }
+                                                            }
+                                                        }
+                                                    ],
+                                                    legend: [{
+                                                        top: 5,
+                                                        left: 110,
+                                                        data: ['OHLC线', 'K线图', 'MA5', 'MA10', 'MA20', 'MA30'],
+                                                        textStyle: {
+                                                            color: '#fff'
+                                                        },
+                                                        selected: {
+                                                            'OHLC线': true,
+                                                            'K线图': false,
+                                                            'MA5': false,
+                                                            'MA10': false,
+                                                            'MA20': false,
+                                                            'MA30': false
+                                                        }
+                                                    }, ],
+                                                    grid: [{
+                                                        x: left,
+                                                        y: top,
+                                                        x2: right,
+                                                        y2: bottom
+                                                    }],
+                                                    title: [{
+                                                        text: "日线",
+                                                        left: left,
+                                                        top: top,
+                                                        textStyle: {
+                                                            color: "#888"
+                                                        }
+                                                    }],
+                                                    dataZoom: [{
+                                                            type: 'inside',
+                                                            start: 90,
+                                                        },
+                                                        {
+                                                            type: 'slider',
+                                                            start: 90,
+                                                            handleIcon: 'M10.7,11.9v-1.3H9.3v1.3c-4.9,0.3-8.8,4.4-8.8,9.4c0,5,3.9,9.1,8.8,9.4v1.3h1.3v-1.3c4.9-0.3,8.8-4.4,8.8-9.4C19.5,16.3,15.6,12.2,10.7,11.9z M13.3,24.4H6.7V23h6.6V24.4z M13.3,19.6H6.7v-1.4h6.6V19.6z',
+                                                            handleSize: "80%",
+                                                            dataBackground: {
+                                                                areaStyle: {
+                                                                    color: '#3891c2'
+                                                                },
+                                                                lineStyle: {
+                                                                    color: '#3891c2'
+                                                                }
+                                                            },
+                                                            handleStyle: {
+                                                                color: '#fff',
+                                                                shadowBlur: 3,
+                                                                shadowColor: 'rgba(0, 0, 0, 0.6)',
+                                                                shadowOffsetX: 2,
+                                                                shadowOffsetY: 2
+                                                            },
+                                                            textStyle: {
+                                                                color: "#fff"
+                                                            },
+                                                            fillerColor: "rgba(20,118,212,0.4)",
+                                                            backgroundColor: "#3A3A3A"
+                                                        }
+                                                    ],
+                                                    tooltip: {
+                                                        trigger: 'axis',
+                                                        confine: true,
+                                                        axisPointer: {
+                                                            type: 'cross',
+                                                            crossStyle: {
+                                                                type: "solid",
+                                                                color: "#00ff00"
+                                                            },
+                                                            z: 4
+                                                        },
+                                                        backgroundColor: '#333',
+                                                        borderWidth: 2,
+                                                        borderColor: '#fff',
+                                                        padding: [10, 20],
+                                                        textStyle: {
+                                                            color: '#fff',
+                                                            fontSize: 12,
+                                                        },
+                                                        position: function(pos, params, el, elRect, size) {
+                                                            var obj = { top: 60 };
+                                                            obj[['left', 'right'][+(pos[0] < size.viewSize[0] / 2)]] = 30;
+                                                            return obj;
+                                                        },
+                                                    },
+                                                    axisPointer: {
+                                                        link: { xAxisIndex: 'all' },
+                                                        label: {
+                                                            backgroundColor: '#777',
+                                                            show: true,
+                                                            textStyle: {
+                                                                color: "#fff"
+                                                            }
+                                                        },
+                                                        lineStyle: {
+                                                            color: "#00ff00",
+                                                            type: "solid"
+                                                        },
+                                                        z: 4
+                                                    },
+                                                    toolbox: {
+                                                        feature: {
+                                                            restore: {},
+                                                            saveAsImage: {}
+                                                        },
+                                                        z: 3
+                                                    },
+                                                };
+                                                try {
+                                                    myChart.clear();
+                                                    myChart.setOption(option);
+                                                    myChart.option = options.oneMinute = option;
+                                                } catch (err) {
+                                                    console.log(err);
+                                                }
+                                            }
+                                        });
+                                    }
+
+                                    function splitData(rawData) {
+                                        var categoryData = [];
+                                        var values = [];
+                                        for (var i = 0; i < rawData.length; i++) {
+                                            categoryData.push(rawData[i].TimeStr);
+                                            var t = [i, rawData[i].Open, rawData[i].Close, rawData[i].Lowest, rawData[i].Hightest, rawData[i].Earn, rawData[i].PerEarn];
+                                            values.push(t);
+                                        }
+                                        return {
+                                            categoryData: categoryData,
+                                            values: values
+                                        };
+                                    }
+
+                                    function calculateMA(dayCount, data) {
+                                        var result = [];
+                                        for (var i = 0, len = data.length; i < len; i++) {
+                                            if (i < dayCount) {
+                                                result.push('-');
+                                                continue;
+                                            }
+                                            var sum = 0;
+                                            for (var j = 0; j < dayCount; j++) {
+                                                sum += data[i - j][1];
+                                            }
+                                            result.push((sum / dayCount).toFixed(2));
+                                        }
+                                        return result;
+                                    }
+
+                                    function renderItem(params, api) {
+                                        var xValue = api.value(0);
+                                        var openPoint = api.coord([xValue, api.value(1)]);
+                                        var closePoint = api.coord([xValue, api.value(2)]);
+                                        var lowPoint = api.coord([xValue, api.value(3)]);
+                                        var highPoint = api.coord([xValue, api.value(4)]);
+                                        var halfWidth = api.size([1, 0])[0] * 0.35;
+                                        var style = api.style({
+                                            stroke: "#FF0000"
+                                        });
+                                        var style2 = api.style({
+                                            stroke: "#00FF00"
+                                        });
+
+                                        return {
+                                            type: 'group',
+                                            children: [{
+                                                type: 'line',
+                                                shape: {
+                                                    x1: lowPoint[0],
+                                                    y1: lowPoint[1],
+                                                    x2: highPoint[0],
+                                                    y2: highPoint[1]
+                                                },
+                                                style: openPoint[1] > closePoint[1] ? style : style2
+                                            }, {
+                                                type: 'line',
+                                                shape: {
+                                                    x1: openPoint[0],
+                                                    y1: openPoint[1],
+                                                    x2: openPoint[0] - halfWidth,
+                                                    y2: openPoint[1]
+                                                },
+                                                style: openPoint[1] > closePoint[1] ? style : style2
+                                            }, {
+                                                type: 'line',
+                                                shape: {
+                                                    x1: closePoint[0],
+                                                    y1: closePoint[1],
+                                                    x2: closePoint[0] + halfWidth,
+                                                    y2: closePoint[1]
+                                                },
+                                                style: openPoint[1] > closePoint[1] ? style : style2
+                                            }]
+                                        };
+                                    }
+
+                                    function AddIndex() {
+                                        var count = 1;
+                                        var _indexs = [];
+                                        $.each(indexs, function(index, el) {
+                                            if (el === true) {
+                                                count++;
+                                                _indexs.push(index);
+                                            }
+                                        });
+                                        if (count == 1) {
+                                            myChart.clear();
+                                            myChart.setOption(myChart.option);
+                                            return;
+                                        }
+                                        var split = 20;
+                                        var height = Math.round((myChart.getHeight() - top - bottom - (count - 1) * split) / count);
+                                        var grids = [];
+                                        var xAxis = [];
+                                        var yAxis = [];
+                                        var series = [];
+                                        var titles = [];
+                                        var legends = [];
+
+                                        var option = $.extend(true, {}, myChart.option);
+                                        var Kdata = option.series[1].data;
+
+                                        var array = [];
+
+                                        for (var i = 0; i < count; i++) {
+                                            array.push(i);
+                                            grids.push({
+                                                x: left,
+                                                x2: right,
+                                                y: top + i * (height + split),
+                                                height: height
+                                            });
+                                            var _xAxis = $.extend(true, {}, option.xAxis[0]);
+                                            var _yAxis = $.extend(true, {}, option.yAxis[0]);
+                                            _xAxis.gridIndex = i;
+                                            _yAxis.gridIndex = i;
+                                            xAxis.push(_xAxis);
+                                            yAxis.push(_yAxis);
+                                            if (i == 0) {
+                                                titles.push(option.title[0]);
+                                                series = option.series;
+                                                legends = option.legend;
+                                            } else {
+                                                titles.push({
+                                                    text: _indexs[i - 1],
+                                                    left: left,
+                                                    top: top + i * (height + split),
+                                                    textStyle: {
+                                                        color: "#888"
+                                                    }
+                                                });
+
+                                                series.push({
+                                                    name: _indexs[i - 1] + '-index',
+                                                    data: calculateMA(+_indexs[i - 1].substring(2), Kdata),
+                                                    type: 'line',
+                                                    smooth: true,
+                                                    showSymbol: false,
+                                                    lineStyle: {
+                                                        normal: {
+                                                            width: 1
+                                                        }
+                                                    },
+                                                    xAxisIndex: i,
+                                                    yAxisIndex: i
+                                                });
+
+                                                legends.push({
+                                                    top: top + i * (height + split) - split,
+                                                    left: left,
+                                                    data: [_indexs[i - 1] + '-index'],
+                                                    textStyle: {
+                                                        color: '#fff'
+                                                    }
+                                                });
+                                            }
+                                        }
+
+                                        for (var i = 0; i < xAxis.length - 1; i++) {
+                                            xAxis[i].axisLabel = { show: false };
+                                            xAxis[i].axisTick = { show: false };
+                                        }
+
+                                        option.dataZoom.map(function(item) {
+                                            item.xAxisIndex = array;
+                                        })
+                                        option.grid = grids;
+                                        option.title = titles;
+                                        option.xAxis = xAxis;
+                                        option.yAxis = yAxis;
+                                        option.series = series;
+                                        option.legend = legends;
+                                        myChart.clear();
+                                        myChart.setOption(option);
+                                    }
+                                }
+                            });
+                            </script>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="tab_4">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm-6 col-xs-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <p class="text-center">图表</p>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="container-fluid">
+                                            <div class="row">
+                                                <div id="echarts_4_1"></div>
+                                            </div>
+                                            <div class="row">
+                                                <div id="echarts_4_2"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-xs-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <a href="#" class="close" id="closeAllMsg" data-toggle="tooltip" data-placement="left" title="移除所有信息">&times;</a>
+                                        <p class="text-center">事件</p>
+                                    </div>
+                                    <div class="panel-body" id="msgInfos">
+                                        <div class="alert alert-info hide" id="msg-model" style="padding: 5px 15px;margin-bottom: 10px;">
+                                            <a href="#" class="close" data-dismiss="alert">&times;</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <script type="text/javascript">
+                            $(function() {
+                                myCharts.push({
+                                    paneId: 'tab_4',
+                                    domId: 'echarts_4_1',
+                                    size: 'auto',
+                                    show: ShowECharts
+                                });
+
+                                function ShowECharts(myChart) {
+                                    var symbolSize = 20;
+                                    // 这个 data 变量在这里单独声明，在后面也会用到。
+                                    var data = [
+                                        [15, 0],
+                                        [-50, 10],
+                                        [-56.5, 20],
+                                        [-46.5, 30],
+                                        [-22.1, 40]
+                                    ];
+                                    myChart.setOption({
+                                        xAxis: {
+                                            min: -100,
+                                            max: 80,
+                                            type: 'value',
+                                            axisLine: { onZero: false }
+                                        },
+                                        yAxis: {
+                                            min: -30,
+                                            max: 60,
+                                            type: 'value',
+                                            axisLine: { onZero: false }
+                                        },
+                                        series: [{
+                                            id: 'a',
+                                            type: 'line',
+                                            smooth: true,
+                                            symbolSize: symbolSize, // 为了方便拖拽，把 symbolSize 尺寸设大了。
+                                            data: data
+                                        }],
+                                        tooltip: {
+                                            // 表示不使用默认的『显示』『隐藏』触发规则。
+                                            triggerOn: 'none',
+                                            formatter: function(params) {
+                                                return 'X: ' + params.data[0].toFixed(2) + '<br>Y: ' + params.data[1].toFixed(2);
+                                            }
+                                        },
+                                        backgroundColor: '#F3F3F3',
+                                        title: { text: 'Graphic图形和局域缩放' },
+                                        dataZoom: [{
+                                                type: 'slider',
+                                                xAxisIndex: 0,
+                                                start: 10,
+                                                end: 60
+                                            },
+                                            {
+                                                type: 'inside',
+                                                xAxisIndex: 0,
+                                                start: 10,
+                                                end: 60
+                                            },
+                                            {
+                                                type: 'slider',
+                                                yAxisIndex: 0,
+                                                start: 30,
+                                                end: 80
+                                            },
+                                            {
+                                                type: 'inside',
+                                                yAxisIndex: 0,
+                                                start: 30,
+                                                end: 80
+                                            }
+                                        ],
+                                    });
+
+                                    myChart.setOption({
+                                        // 声明一个 graphic component，里面有若干个 type 为 'circle' 的 graphic elements。
+                                        // 这里使用了 echarts.util.map 这个帮助方法，其行为和 Array.prototype.map 一样，但是兼容 es5 以下的环境。
+                                        // 用 map 方法遍历 data 的每项，为每项生成一个圆点。
+                                        graphic: echarts.util.map(data, function(dataItem, dataIndex) {
+                                            return {
+                                                // 'circle' 表示这个 graphic element 的类型是圆点。
+                                                type: 'circle',
+
+                                                shape: {
+                                                    // 圆点的半径。
+                                                    r: symbolSize / 2
+                                                },
+                                                // 用 transform 的方式对圆点进行定位。position: [x, y] 表示将圆点平移到 [x, y] 位置。
+                                                // 这里使用了 convertToPixel 这个 API 来得到每个圆点的位置，下面介绍。
+                                                position: myChart.convertToPixel('grid', dataItem),
+
+                                                // 这个属性让圆点不可见（但是不影响他响应鼠标事件）。
+                                                invisible: false,
+                                                // 这个属性让圆点可以被拖拽。
+                                                draggable: true,
+                                                // 把 z 值设得比较大，表示这个圆点在最上方，能覆盖住已有的折线图的圆点。
+                                                z: 100,
+                                                // 此圆点的拖拽的响应事件，在拖拽过程中会不断被触发。下面介绍详情。
+                                                // 这里使用了 echarts.util.curry 这个帮助方法，意思是生成一个与 onPointDragging
+                                                // 功能一样的新的函数，只不过第一个参数永远为此时传入的 dataIndex 的值。
+                                                ondrag: echarts.util.curry(onPointDragging, dataIndex),
+                                                onmousemove: echarts.util.curry(showTooltip, dataIndex),
+                                                onmouseout: echarts.util.curry(hideTooltip, dataIndex),
+                                                onmousedown: echarts.util.curry(onMousedownGraphic, dataIndex),
+                                                onmousemove: echarts.util.curry(onMousemoveGraphic, dataIndex),
+                                                onmouseup: echarts.util.curry(onMouseupGraphic, dataIndex),
+                                            };
+                                        })
+                                    });
+
+                                    // 拖拽某个圆点的过程中会不断调用此函数。
+                                    // 此函数中会根据拖拽后的新位置，改变 data 中的值，并用新的 data 值，重绘折线图，从而使折线图同步于被拖拽的隐藏圆点。
+                                    function onPointDragging(dataIndex) {
+                                        // 这里的 data 就是本文最初的代码块中声明的 data，在这里会被更新。
+                                        // 这里的 this 就是被拖拽的圆点。this.position 就是圆点当前的位置。
+                                        data[dataIndex] = myChart.convertFromPixel('grid', this.position);
+                                        // 用更新后的 data，重绘折线图。
+                                        myChart.setOption({
+                                            series: [{
+                                                id: 'a',
+                                                data: data
+                                            }]
+                                        });
+                                    }
+
+                                    window.addEventListener('resize', updatePosition);
+                                    myChart.on('dataZoom', updatePosition);
+
+                                    function updatePosition() {
+                                        myChart.setOption({
+                                            graphic: echarts.util.map(data, function(item, dataIndex) {
+                                                return {
+                                                    position: myChart.convertToPixel('grid', item)
+                                                };
+                                            })
+                                        });
+                                    }
+
+                                    function showTooltip(dataIndex) {
+                                        myChart.dispatchAction({
+                                            type: 'showTip',
+                                            seriesIndex: 0,
+                                            dataIndex: dataIndex
+                                        });
+                                    }
+
+                                    function hideTooltip(dataIndex) {
+                                        myChart.dispatchAction({
+                                            type: 'hideTip'
+                                        });
+                                    }
+
+                                    function addMsg(msg) {
+                                        var alert = $('#msg-model').clone(true, true).removeAttr("id");
+                                        $(alert).append(msg).removeClass('hide');
+                                        $('#msgInfos').prepend(alert);
+                                    }
+                                    var Graphic = [];
+
+                                    function onMousedownGraphic(dataIndex) {
+                                        Graphic.push({
+                                            index: dataIndex,
+                                            isdown: true,
+                                            ismove: false
+                                        });
+                                    }
+
+                                    function onMousemoveGraphic(dataIndex) {
+                                        Graphic.map(function(item) {
+                                            if (item.index == dataIndex && item.isdown)
+                                                item.ismove = true;
+                                        })
+                                    }
+
+                                    function onMouseupGraphic(dataIndex) {
+                                        Graphic.map(function(item) {
+                                            if (item.index == dataIndex && item.isdown) {
+                                                if (item.ismove)
+                                                    addMsg("拖动了第" + (dataIndex + 1) + "个Graphic图形");
+                                                else
+                                                    addMsg("点击了第" + (dataIndex + 1) + "个Graphic图形");
+                                            }
+                                        })
+                                        Graphic = [];
+                                    }
+                                    myChart.on('datazoom', function(event) {
+                                        addMsg("局域缩放");
+                                    });
+                                }
+                            });
+                            $(function() {
+                                myCharts.push({
+                                    paneId: 'tab_4',
+                                    domId: 'echarts_4_2',
+                                    size: 'auto',
+                                    show: ShowECharts
+                                });
+
+                                function ShowECharts(myChart) {
+                                    var option_Line = {
+                                        backgroundColor: '#F3F3F3',
+                                        title: { text: '点击数据和切换图例' },
+                                        tooltip: { trigger: 'axis' },
+                                        xAxis: { data: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子'] },
+                                        yAxis: {},
+                                        series: [{
+                                            type: 'line',
+                                            data: [],
+                                        }],
+                                        grid: {
+                                            right: 85
+                                        }
+                                    };
+                                    myChart.setOption(option_Line);
+                                    myChart.showLoading();
+
+                                    setTimeout(function() {
+                                        myChart.hideLoading();
+                                        myChart.setOption({
+                                            legend: {
+                                                data: [{
+                                                    name: '空心圆',
+                                                    icon: 'emptyCircle'
+                                                }, {
+                                                    name: '实心圆',
+                                                    icon: 'circle'
+                                                }, {
+                                                    name: '矩形',
+                                                    icon: 'rect'
+                                                }, {
+                                                    name: '圆角矩形',
+                                                    icon: 'roundRect'
+                                                }, {
+                                                    name: '三角形',
+                                                    icon: 'triangle'
+                                                }, {
+                                                    name: '菱形',
+                                                    icon: 'diamond'
+                                                }, {
+                                                    name: '钉形',
+                                                    icon: 'pin'
+                                                }, {
+                                                    name: '箭头',
+                                                    icon: 'arrow'
+                                                }],
+                                                selectedMode: 'multiple',
+                                                selected: {
+                                                    '空心圆': true,
+                                                    '实心圆': true,
+                                                    '矩形': false,
+                                                    '圆角矩形': false,
+                                                    '三角形': false,
+                                                    '菱形': false,
+                                                    '钉形': false,
+                                                    '箭头': false
+                                                },
+                                                orient: 'vertical',
+                                                right: 0
+                                            },
+                                            series: [{
+                                                name: '空心圆',
+                                                type: 'line',
+                                                data: fetchData(),
+                                                smooth: false,
+                                                symbol: 'emptyCircle',
+                                                showSymbol: true,
+                                                symbolSize: 10
+                                            }, {
+                                                name: '实心圆',
+                                                type: 'line',
+                                                data: fetchData(),
+                                                smooth: false,
+                                                symbol: 'circle',
+                                                showSymbol: true,
+                                                symbolSize: 10
+                                            }, {
+                                                name: '矩形',
+                                                type: 'line',
+                                                data: fetchData(),
+                                                smooth: false,
+                                                symbol: 'rect',
+                                                showSymbol: true,
+                                                symbolSize: 10
+                                            }, {
+                                                name: '圆角矩形',
+                                                type: 'line',
+                                                data: fetchData(),
+                                                smooth: false,
+                                                symbol: 'roundRect',
+                                                showSymbol: true,
+                                                symbolSize: 10
+                                            }, {
+                                                name: '三角形',
+                                                type: 'line',
+                                                data: fetchData(),
+                                                smooth: false,
+                                                symbol: 'triangle',
+                                                showSymbol: true,
+                                                symbolSize: 10
+                                            }, {
+                                                name: '菱形',
+                                                type: 'line',
+                                                data: fetchData(),
+                                                smooth: false,
+                                                symbol: 'diamond',
+                                                showSymbol: true,
+                                                symbolSize: 10
+                                            }, {
+                                                name: '钉形',
+                                                type: 'line',
+                                                data: fetchData(),
+                                                smooth: false,
+                                                symbol: 'pin',
+                                                showSymbol: true,
+                                                symbolSize: 10
+                                            }, {
+                                                name: '箭头',
+                                                type: 'line',
+                                                data: fetchData(),
+                                                smooth: false,
+                                                symbol: 'arrow',
+                                                showSymbol: true,
+                                                symbolSize: 10
+                                            }]
+                                        });
+                                    }, 1000);
+                                    var legends = ['空心圆', '实心圆', '矩形', '圆角矩形', '三角形', '菱形', '钉形', '箭头'];
+
+                                    function fetchData() {
+                                        return [Math.round(Math.random() * 40), Math.round(Math.random() * 40), Math.round(Math.random() * 40), Math.round(Math.random() * 40), Math.round(Math.random() * 40), Math.round(Math.random() * 40)];
+                                    }
+
+                                    function addMsg(msg) {
+                                        var alert = $('#msg-model').clone(true, true).removeAttr("id");
+                                        $(alert).append(msg).removeClass('hide');
+                                        $('#msgInfos').prepend(alert);
+                                    }
+                                    myChart.off('click');
+                                    myChart.on('click', function(params) {
+                                        if (params.componentType === 'series') {
+                                            var msg = "点击了第" + (params.dataIndex + 1) + "个图元；系列名：" + legends[params.seriesIndex] + "；类目名：" + params.name + "；数值：" + params.value + "。";
+                                            addMsg(msg);
+                                        }
+                                    });
+
+                                    myChart.off('legendselectchanged');
+                                    myChart.on('legendselectchanged', function(params) {
+                                        var msg = "";
+                                        if (params.selected[params.name])
+                                            msg = "选中" + params.name;
+                                        else
+                                            msg = "取消选中" + params.name;
+                                        addMsg(msg);
+                                    });
+                                }
+                            });
+                            $(function() {
+                                $('#closeAllMsg').click(function() {
+                                    $('#msgInfos').children().not('#msg-model').remove();
+                                    $(this).tooltip('hide');
+                                });
+                            });
+                            </script>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="tab_5">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-4 col-sm-6 col-xs-12">
+                                <div id="echarts_5_1"></div>
+                                <script type="text/javascript">
+                                $(function() {
+                                    myCharts.push({
+                                        paneId: "tab_5",
+                                        domId: "echarts_5_1",
+                                        show: ShowECharts,
+                                        size: "auto"
+                                    });
+
+                                    function ShowECharts(myChart) {
+                                        var option_Line = {
+                                            backgroundColor: '#F3F3F3',
+                                            title: { text: '图标' },
+                                            tooltip: { trigger: 'axis' },
+                                            xAxis: { data: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子'] },
+                                            yAxis: {},
+                                            series: [{
+                                                type: 'line',
+                                                data: [],
+                                            }],
+                                            grid: {
+                                                right: 85
+                                            }
+                                        };
+                                        myChart.setOption(option_Line);
+                                        myChart.showLoading();
+
+                                        setTimeout(function() {
+                                            myChart.hideLoading();
+                                            myChart.setOption({
+                                                legend: {
+                                                    data: [{
+                                                        name: '空心圆',
+                                                        icon: 'emptyCircle'
+                                                    }, {
+                                                        name: '实心圆',
+                                                        icon: 'circle'
+                                                    }, {
+                                                        name: '矩形',
+                                                        icon: 'rect'
+                                                    }, {
+                                                        name: '圆角矩形',
+                                                        icon: 'roundRect'
+                                                    }, {
+                                                        name: '三角形',
+                                                        icon: 'triangle'
+                                                    }, {
+                                                        name: '菱形',
+                                                        icon: 'diamond'
+                                                    }, {
+                                                        name: '钉形',
+                                                        icon: 'pin'
+                                                    }, {
+                                                        name: '箭头',
+                                                        icon: 'arrow'
+                                                    }],
+                                                    selectedMode: 'multiple',
+                                                    selected: {
+                                                        '空心圆': true,
+                                                        '实心圆': true,
+                                                        '矩形': true,
+                                                        '圆角矩形': false,
+                                                        '三角形': false,
+                                                        '菱形': false,
+                                                        '钉形': false,
+                                                        '箭头': false
+                                                    },
+                                                    orient: 'vertical',
+                                                    right: 0
+                                                },
+                                                series: [{
+                                                    name: '空心圆',
+                                                    type: 'line',
+                                                    data: fetchData(),
+                                                    smooth: false,
+                                                    symbol: 'emptyCircle',
+                                                    showSymbol: true,
+                                                    symbolSize: 10
+                                                }, {
+                                                    name: '实心圆',
+                                                    type: 'line',
+                                                    data: fetchData(),
+                                                    smooth: false,
+                                                    symbol: 'circle',
+                                                    showSymbol: true,
+                                                    symbolSize: 10
+                                                }, {
+                                                    name: '矩形',
+                                                    type: 'line',
+                                                    data: fetchData(),
+                                                    smooth: false,
+                                                    symbol: 'rect',
+                                                    showSymbol: true,
+                                                    symbolSize: 10
+                                                }, {
+                                                    name: '圆角矩形',
+                                                    type: 'line',
+                                                    data: fetchData(),
+                                                    smooth: false,
+                                                    symbol: 'roundRect',
+                                                    showSymbol: true,
+                                                    symbolSize: 10
+                                                }, {
+                                                    name: '三角形',
+                                                    type: 'line',
+                                                    data: fetchData(),
+                                                    smooth: false,
+                                                    symbol: 'triangle',
+                                                    showSymbol: true,
+                                                    symbolSize: 10
+                                                }, {
+                                                    name: '菱形',
+                                                    type: 'line',
+                                                    data: fetchData(),
+                                                    smooth: false,
+                                                    symbol: 'diamond',
+                                                    showSymbol: true,
+                                                    symbolSize: 10
+                                                }, {
+                                                    name: '钉形',
+                                                    type: 'line',
+                                                    data: fetchData(),
+                                                    smooth: false,
+                                                    symbol: 'pin',
+                                                    showSymbol: true,
+                                                    symbolSize: 10
+                                                }, {
+                                                    name: '箭头',
+                                                    type: 'line',
+                                                    data: fetchData(),
+                                                    smooth: false,
+                                                    symbol: 'arrow',
+                                                    showSymbol: true,
+                                                    symbolSize: 10
+                                                }]
+                                            });
+                                        }, 1000);
+
+                                        function fetchData() {
+                                            return [Math.round(Math.random() * 40), Math.round(Math.random() * 40), Math.round(Math.random() * 40), Math.round(Math.random() * 40), Math.round(Math.random() * 40), Math.round(Math.random() * 40)];
+                                        }
+                                    }
+                                });
+                                </script>
+                            </div>
+                            <div class="col-md-4 col-sm-6 col-xs-12">
+                                <div id="echarts_5_2"></div>
+                                <script type="text/javascript">
+                                $(function() {
+                                    myCharts.push({
+                                        paneId: "tab_5",
+                                        domId: "echarts_5_2",
+                                        show: ShowECharts,
+                                        size: "auto"
+                                    });
+
+                                    function ShowECharts(myChart) {
+                                        var option_Line = {
+                                            backgroundColor: '#F3F3F3',
+                                            title: { text: '区域图' },
+                                            tooltip: { trigger: 'axis' },
+                                            legend: { data: ['line', 'bar'] },
+                                            xAxis: { data: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子'] },
+                                            yAxis: {},
+                                            series: [{
+                                                name: 'line',
+                                                type: 'line',
+                                                smooth: true,
+                                                data: [],
+                                                showSymbol: true,
+                                                symbolSize: 10
+                                            }]
+                                        };
+                                        myChart.setOption(option_Line);
+                                        myChart.showLoading();
+
+                                        setTimeout(function() {
+                                            myChart.hideLoading();
+                                            myChart.setOption({
+                                                series: [{
+                                                    name: 'line',
+                                                    data: fetchData(),
+                                                    areaStyle: { normal: {} }
+                                                }, {
+                                                    name: 'bar',
+                                                    type: 'bar',
+                                                    data: fetchData(),
+                                                    barMaxWidth: 20
+                                                }]
+                                            });
+                                        }, 2000);
+
+                                        function fetchData() {
+                                            return [Math.round((Math.random() - 0.5) * 40), Math.round((Math.random() - 0.5) * 40), Math.round((Math.random() - 0.5) * 40), Math.round((Math.random() - 0.5) * 40), Math.round((Math.random() - 0.5) * 40), Math.round((Math.random() - 0.5) * 40)];
+                                        }
+                                    }
+                                });
+                                </script>
+                            </div>
+                            <div class="col-md-4 col-sm-6 col-xs-12">
+                                <div id="echarts_5_3"></div>
+                                <script type="text/javascript">
+                                $(function() {
+                                    myCharts.push({
+                                        paneId: "tab_5",
+                                        domId: "echarts_5_3",
+                                        show: ShowECharts,
+                                        size: "auto"
+                                    });
+
+                                    function ShowECharts(myChart) {
+                                        var option_Line = {
+                                            backgroundColor: '#F3F3F3',
+                                            title: { text: '柱状图' },
+                                            tooltip: { trigger: 'axis' },
+                                            legend: { data: ['bar'] },
+                                            xAxis: { data: [] },
+                                            yAxis: {},
+                                            series: [{
+                                                name: 'bar',
+                                                type: 'bar',
+                                                smooth: true,
+                                                data: [],
+                                                showSymbol: true,
+                                                symbolSize: 10,
+                                                barMaxWidth: 20
+                                            }]
+                                        };
+                                        myChart.setOption(option_Line);
+                                        myChart.showLoading();
+
+                                        setTimeout(function() {
+                                            myChart.hideLoading();
+                                            fetchData(function(data) {
+                                                myChart.setOption({
+                                                    xAxis: { data: data.categories },
+                                                    series: [{
+                                                        name: 'bar',
+                                                        data: data.data,
+                                                        areaStyle: { normal: {} }
+                                                    }]
+                                                });
+                                            });
+                                        }, 3000);
+
+                                        function fetchData(cb) {
+                                            cb({
+                                                categories: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子'],
+                                                data: [Math.round((Math.random() - 0.5) * 40), Math.round((Math.random() - 0.5) * 40), Math.round((Math.random() - 0.5) * 40), Math.round((Math.random() - 0.5) * 40), Math.round((Math.random() - 0.5) * 40), Math.round((Math.random() - 0.5) * 40)]
+                                            })
+                                        }
+                                    }
+                                });
+                                </script>
+                            </div>
+                            <div class="col-md-4 col-sm-6 col-xs-12">
+                                <div id="echarts_5_4"></div>
+                                <script type="text/javascript">
+                                $(function() {
+                                    myCharts.push({
+                                        paneId: "tab_5",
+                                        domId: "echarts_5_4",
+                                        show: ShowECharts,
+                                        size: "auto"
+                                    });
+
+                                    function ShowECharts(myChart) {
+                                        var option_Line = {
+                                            backgroundColor: '#F3F3F3',
+                                            title: { text: '占位' },
+                                            tooltip: { trigger: 'axis' },
+                                            legend: { data: ['销量'] },
+                                            xAxis: { data: [] },
+                                            yAxis: {},
+                                            series: [{
+                                                name: '销量',
+                                                type: 'line',
+                                                smooth: true,
+                                                data: [],
+                                                showSymbol: true,
+                                                symbolSize: 10
+                                            }]
+                                        };
+                                        myChart.setOption(option_Line);
+                                        myChart.showLoading();
+
+                                        setTimeout(function() {
+                                            myChart.hideLoading();
+                                            fetchData(function(data) {
+                                                myChart.setOption({
+                                                    xAxis: { data: data.categories },
+                                                    series: [{
+                                                        name: '销量',
+                                                        data: data.data
+                                                    }]
+                                                });
+                                            });
+                                        }, 4000);
+
+                                        function fetchData(cb) {
+                                            cb({
+                                                categories: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子'],
+                                                data: [Math.round(Math.random() * 40), Math.round(Math.random() * 40), Math.round(Math.random() * 40), Math.round(Math.random() * 40), Math.round(Math.random() * 40), Math.round(Math.random() * 40)]
+                                            })
+                                        }
+                                    }
+                                });
+                                </script>
+                            </div>
+                            <div class="col-md-4 col-sm-6 col-xs-12">
+                                <div id="echarts_5_5"></div>
+                                <script type="text/javascript">
+                                $(function() {
+                                    myCharts.push({
+                                        paneId: "tab_5",
+                                        domId: "echarts_5_5",
+                                        show: ShowECharts,
+                                        size: "auto"
+                                    });
+
+                                    function ShowECharts(myChart) {
+                                        var option_Line = {
+                                            backgroundColor: '#F3F3F3',
+                                            title: { text: '占位' },
+                                            tooltip: { trigger: 'axis' },
+                                            legend: { data: ['销量'] },
+                                            xAxis: { data: [] },
+                                            yAxis: {},
+                                            series: [{
+                                                name: '销量',
+                                                type: 'line',
+                                                smooth: true,
+                                                data: [],
+                                                showSymbol: true,
+                                                symbolSize: 10
+                                            }]
+                                        };
+                                        myChart.setOption(option_Line);
+                                        myChart.showLoading();
+
+                                        setTimeout(function() {
+                                            myChart.hideLoading();
+                                            fetchData(function(data) {
+                                                myChart.setOption({
+                                                    xAxis: { data: data.categories },
+                                                    series: [{
+                                                        name: '销量',
+                                                        data: data.data
+                                                    }]
+                                                });
+                                            });
+                                        }, 5000);
+
+                                        function fetchData(cb) {
+                                            cb({
+                                                categories: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子'],
+                                                data: [Math.round(Math.random() * 40), Math.round(Math.random() * 40), Math.round(Math.random() * 40), Math.round(Math.random() * 40), Math.round(Math.random() * 40), Math.round(Math.random() * 40)]
+                                            })
+                                        }
+                                    }
+                                });
+                                </script>
+                            </div>
+                            <div class="col-md-4 col-sm-6 col-xs-12">
+                                <div id="echarts_5_6"></div>
+                                <script type="text/javascript">
+                                $(function() {
+                                    myCharts.push({
+                                        paneId: "tab_5",
+                                        domId: "echarts_5_6",
+                                        show: ShowECharts,
+                                        size: "auto"
+                                    });
+
+                                    function ShowECharts(myChart) {
+                                        var option_Line = {
+                                            backgroundColor: '#F3F3F3',
+                                            title: { text: '占位' },
+                                            tooltip: { trigger: 'axis' },
+                                            legend: { data: ['销量'] },
+                                            xAxis: { data: [] },
+                                            yAxis: {},
+                                            series: [{
+                                                name: '销量',
+                                                type: 'line',
+                                                smooth: true,
+                                                data: [],
+                                                showSymbol: true,
+                                                symbolSize: 10
+                                            }]
+                                        };
+                                        myChart.setOption(option_Line);
+                                        myChart.showLoading();
+
+                                        setTimeout(function() {
+                                            myChart.hideLoading();
+                                            fetchData(function(data) {
+                                                myChart.setOption({
+                                                    xAxis: { data: data.categories },
+                                                    series: [{
+                                                        name: '销量',
+                                                        data: data.data
+                                                    }]
+                                                });
+                                            });
+                                        }, 6000);
+
+                                        function fetchData(cb) {
+                                            cb({
+                                                categories: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子'],
+                                                data: [Math.round(Math.random() * 40), Math.round(Math.random() * 40), Math.round(Math.random() * 40), Math.round(Math.random() * 40), Math.round(Math.random() * 40), Math.round(Math.random() * 40)]
+                                            })
+                                        }
+                                    }
+                                });
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="home">Home</div>
+                <div class="tab-pane fade" id="svn">Svn</div>
+                <div class="tab-pane fade" id="ios">Ios</div>
+                <div class="tab-pane fade" id="java">Java</div>
+            </div>
+            <!-- main -->
+            <div class="topbar-nav">
+                <button type="button" class="btn btn-default pull-right" id="trash">
+                    <span class="glyphicon glyphicon-trash"></span>
+                </button>
+                <div class="topbar-container">
+                    <div class="btn-group">
+                        <a href="#tab_1" data-toggle="tab" class="btn btn-default">自己实现拖拽</a>
+                        <a href="#tab_2" data-toggle="tab" class="btn btn-default">上证指数</a>
+                        <a href="#tab_3" data-toggle="tab" class="btn btn-default">Demo</a>
+                        <a href="#tab_4" data-toggle="tab" class="btn btn-default">ECharts事件</a>
+                        <a href="#tab_5" data-toggle="tab" class="btn btn-default">折线图</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="index-model" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">添加图表</h4>
+                </div>
+                <div class="modal-body">
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <span>MA5</span>
+                            <input type="checkbox" class="close" id="index-MA5"></input>
+                        </li>
+                        <li class="list-group-item">
+                            <span>MA10</span>
+                            <input type="checkbox" class="close" id="index-MA10"></input>
+                        </li>
+                        <li class="list-group-item">
+                            <span>MA20</span>
+                            <input type="checkbox" class="close" id="index-MA20"></input>
+                        </li>
+                        <li class="list-group-item">
+                            <span>MA30</span>
+                            <input type="checkbox" class="close" id="index-MA30"></input>
+                        </li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="index-confirm">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

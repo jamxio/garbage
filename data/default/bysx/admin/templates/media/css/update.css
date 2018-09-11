@@ -1,0 +1,7 @@
+.uneditable-input, textarea.m-wrap, input.m-wrap[type="text"], input.m-wrap[type="password"], input.m-wrap[type="datetime"], input.m-wrap[type="datetime-local"], input.m-wrap[type="date"], input.m-wrap[type="month"], input.m-wrap[type="time"], input.m-wrap[type="week"], input.m-wrap[type="number"], input.m-wrap[type="email"], input.m-wrap[type="url"], input.m-wrap[type="search"], input.m-wrap[type="tel"], input.m-wrap[type="color"]{
+	height: 30px;
+}
+input, select, label{display: inline;}
+select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input{
+	height: auto;
+}

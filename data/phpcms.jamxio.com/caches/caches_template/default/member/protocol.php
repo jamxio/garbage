@@ -1,0 +1,15 @@
+<?php defined('IN_PHPCMS') or exit('No permission resources.'); ?><style type="text/css">
+pre{padding:0; margin:0; font:12px/22px "宋体"}
+pre {
+	white-space: pre-wrap; /* css-3 */
+	white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+	white-space: -pre-wrap; /* Opera 4-6 */
+	white-space: -o-pre-wrap; /* Opera 7 */
+	word-wrap: break-word; /* Internet Explorer 5.5+ */
+}
+</style>
+<body>
+<pre>
+<?php echo $member_setting['regprotocol'];?>
+</pre>
+</body>

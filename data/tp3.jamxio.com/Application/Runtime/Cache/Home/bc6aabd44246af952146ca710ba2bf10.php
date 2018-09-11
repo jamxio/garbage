@@ -1,0 +1,1 @@
+<?php if (!defined('THINK_PATH')) exit(); if(1 == 0): ?>ni shi bushi sha<?php else: echo 'bingo'; endif; ?>
